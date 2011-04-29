@@ -1,0 +1,60 @@
+h1. gimli - utility for converting markup to pdf
+
+h2. Description
+
+Gimli is a utility for converting markup to pdf files. Useful for reports and such things.
+It's inspired by the markup convertion in "gollum":https://github.com/github/gollum
+It works by converting the markup to html using "PDFKit":https://github.com/jdpace/PDFKit
+The markup is converted to html using "github/markup":https://github.com/github/markup
+
+h3. Markup
+
+Markup files may be written in any format supported by GitHub-Markup (except roff).
+
+h2. Installation
+
+The best way to install Gimli is with RubyGems:
+
+bc. $ [sudo] gem install gimli
+
+You can install from source:
+
+bc. $ cd gimli/
+$ bundle
+$ rake install
+
+h2. Running
+
+The standard way to run gimli is to go to a folder with markup files and running
+
+bc. $ gimli
+
+To apply some style to the pdf or override the standard style add a css file in the directory named @gimli.css@ or use the @-s@ flag to point out another css file.
+
+Standard behavior is for gimli to output the files in the current directory. To override this use the @-o@ flag to point out another output directory. Gimli tries to create it if it doesn't exist.
+
+Run @gimli -h@ for a full list of options available
+
+h2. Syntax highlighting
+
+In page files you can get automatic syntax highlighting for a wide range of languages by using the following syntax:
+
+If you want to be able to use the syntax highlightning you have to install "pygments":http://pygments.org
+
+Example installation on Ubuntu
+
+bc. $ sudo aptitude install python-setuptools
+$ sudo easy_install pygments
+
+bc. ```ruby
+  def foo
+    puts 'bar'
+  end
+```
+
+The block must start with three backticks (as the first characters on the line). After that comes the name of the language that is contained by the block. The language must be one of the short name lexer strings supported by Pygments. See the list of lexers for valid options.
+
+If the block contents are indented two spaces or one tab, then that whitespace will be ignored (this makes the blocks easier to read in plaintext).
+
+The block must end with three backticks as the first characters on a line.
+
