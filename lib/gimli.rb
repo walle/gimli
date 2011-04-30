@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'gimli/version'
 require 'gimli/setup'
 require 'gimli/file'

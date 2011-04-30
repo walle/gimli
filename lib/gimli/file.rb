@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Gimli
 
   # Class used to load files and determine if they are valid

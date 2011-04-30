@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 # This file is based on the markup class in gollum - https://github.com/github/gollum
 # (The MIT License)
 #
@@ -42,7 +44,7 @@ module Gimli
       data = extract_code(@data.dup)
       data = extract_tags(data)
       begin
-        data = GitHub::Markup.render(@filename, data)
+        data = GitHub::Markup.render(@filename, data.force_encoding('utf-8'))
         if data.nil?
           raise "There was an error converting #{@name} to HTML."
         end
@@ -52,7 +54,7 @@ module Gimli
       data = process_tags(data)
       data = process_code(data)
 
-      doc  = Nokogiri::HTML::DocumentFragment.parse(data)
+      doc  = Nokogiri::HTML::DocumentFragment.parse(data.force_encoding('utf-8'))
       yield doc if block_given?
       data = doc_to_html(doc)
 
