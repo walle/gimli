@@ -10,6 +10,12 @@ module Gimli
 
   # Starts the processing of selected files
   def self.process!
+
+    if ARGV.flags.version?
+      puts "Version: #{Gimli::Version}"
+      return
+    end
+
     @files = []
     if ARGV.flags.file?
       Gimli.load_file(ARGV.flags.file)

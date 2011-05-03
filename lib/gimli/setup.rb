@@ -16,6 +16,10 @@ module Gimli extend OptiFlagSet
     description 'The stylesheet to use to override the standard'
     alternate_forms 's'
   end
+  optional_switch_flag 'version' do
+    description 'Show version information and quit'
+    alternate_forms 'v'
+  end
   usage_flag 'h', 'help', '?'
 
   and_process!
