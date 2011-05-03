@@ -34,7 +34,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rr'
-  s.add_development_dependency 'yard'
 
   s.files = Dir.glob("{bin,lib,spec,config}/**/*") + ['LICENSE', 'README.textile']
   s.executables = ['gimli']
