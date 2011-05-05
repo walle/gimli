@@ -1,5 +1,7 @@
 h1. gimli - utility for converting markup to pdf
 
+"!http://travis-ci.org/walle/gimli.png!":http://travis-ci.org/walle/gimli
+
 h2. Description
 
 Gimli is a utility for converting markup to pdf files. Useful for reports and such things.
