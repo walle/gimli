@@ -17,6 +17,7 @@ describe Gimli::Markup do
     file = Gimli::File.new File.expand_path('../../fixtures/code_block.textile', __FILE__)
     markup = Gimli::Markup.new file
 
+    # Check if the html seems to be highlighted
     if markup.render.include? "<div class=\"highlight\">"
       markup.render.should == output_with_pygments
     else
@@ -38,6 +39,7 @@ describe Gimli::Markup do
     file = Gimli::File.new File.expand_path('../../fixtures/code_block_with_utf8.textile', __FILE__)
     markup = Gimli::Markup.new file
 
+    # Check if the html seems to be highlighted
     if markup.render.include? "<div class=\"highlight\">"
       markup.render.should == output_with_pygments
     else
