@@ -17,8 +17,8 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = %w[README.textile LICENSE]
 
+  s.add_dependency 'bundler'
   s.add_dependency 'github-markup'
-
   s.add_dependency 'redcarpet'
   s.add_dependency 'RedCloth'
   s.add_dependency 'org-ruby'
