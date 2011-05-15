@@ -11,6 +11,8 @@ It's inspired by the markup convertion in "gollum":https://github.com/github/gol
 It works by converting the markup to pdf using "PDFKit":https://github.com/jdpace/PDFKit
 The markup is converted to html using "github/markup":https://github.com/github/markup
 
+Check out a small presentation here. "http://slides.wallgren.me/gimli":http://slides.wallgren.me/gimli
+
 h3. Markup
 
 Markup files may be written in any format supported by GitHub-Markup (except roff).
