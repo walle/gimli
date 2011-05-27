@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gimli (0.1.4)
+    gimli (0.1.5)
       RedCloth
       albino
       bundler
