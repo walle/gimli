@@ -69,5 +69,34 @@ describe Gimli::Converter do
 
     converter.stylesheet.should == style
   end
+
+  it 'should convert relative image urls to absolute' do
+    file = Gimli::File.new 'fake'
+    converter = Gimli::Converter.new file
+
+    html = '<p>foo</p><img src="test.jpg" alt="" /><p>bar</p><img src="test2.jpg" alt="" />'
+    valid_html = "<p>foo</p><img src=\"#{File.expand_path('test.jpg')}\" alt=\"\" /><p>bar</p><img src=\"#{File.expand_path('test2.jpg')}\" alt=\"\" />"
+
+    converter.convert_image_urls(html).should == valid_html
+  end
+
+  it 'should not rewrite non relative urls' do
+    file = Gimli::File.new 'fake'
+    converter = Gimli::Converter.new file
+
+    html = '<p>foo</p><img src="https://d3nwyuy0nl342s.cloudfront.net/images/modules/header/logov3-hover.png" alt="" /><p>bar</p>'
+
+    converter.convert_image_urls(html).should == html
+  end
+
+  it 'should work on both absolute and relative images' do
+    file = Gimli::File.new 'fake'
+    converter = Gimli::Converter.new file
+
+    html = '<p>foo</p><img src="test.jpg" alt="" /><p>bar</p><img src="/tmp/test2.jpg" alt="" /> <img src="https://d3nwyuy0nl342s.cloudfront.net/images/modules/header/logov3-hover.png" alt="" />'
+    valid_html = "<p>foo</p><img src=\"#{File.expand_path('test.jpg')}\" alt=\"\" /><p>bar</p><img src=\"/tmp/test2.jpg\" alt=\"\" /> <img src=\"https://d3nwyuy0nl342s.cloudfront.net/images/modules/header/logov3-hover.png\" alt=\"\" />"
+
+    converter.convert_image_urls(html).should == valid_html
+  end
 end
 

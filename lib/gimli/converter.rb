@@ -31,9 +31,11 @@ module Gimli
     # @param [String] html some html to parse
     # @return [String] the html with all image urls replaced to absolute
     def convert_image_urls(html)
-      html.match /<img.+src="([^"]+)"/ do |url|
-        html.gsub $1, ::File.expand_path($1)
+      html.scan(/<img[^>]+src="([^"]+)"/).each do |url|
+        html.gsub!(url[0], ::File.expand_path(url[0])) unless url[0] =~ /^https?/
       end
+
+      html
     end
 
     # Load the pdfkit with html
