@@ -25,6 +25,9 @@ module Gimli
     end
     
     if ARGV.flags.recursive?
+      if target == '*'
+        target = Dir.pwd
+      end
       target = File.join(target, '**', '*')
     end
     
