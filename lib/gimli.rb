@@ -18,11 +18,18 @@ module Gimli
 
     @files = []
     if ARGV.flags.file?
-      Gimli.load_file(ARGV.flags.file)
+      target = ARGV.flags.file
+      target = File.join(target, '*') if File.directory?(target)
     else
-      Dir.glob("*").each do |file|
-        Gimli.load_file(file)
-      end
+      target = "*"
+    end
+    
+    if ARGV.flags.recursive?
+      target = File.join(target, '**', '*')
+    end
+    
+    Dir.glob(target).each do |file|
+      Gimli.load_file(file)
     end
 
     @files.each do |file|
@@ -38,4 +45,3 @@ module Gimli
     @files << file if file.valid?
   end
 end
-
