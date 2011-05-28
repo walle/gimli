@@ -31,7 +31,12 @@ module Gimli
         end
       end
       if !merged_contents.empty?
-        pdf_kit(merged_contents.join).to_file(::File.join(output_dir, "#{Dir.getwd.split('/').last}.pdf")) # TODO: I bet this doesn't work on windows  
+        if ARGV.flags.file?
+          path = ARGV.flags.file
+        else
+          path = Dir.getwd
+        end
+        pdf_kit(merged_contents.join).to_file(::File.join(output_dir, "#{path.split('/').last}.pdf")) # TODO: I bet this doesn't work on windows  
       end
     end
 
