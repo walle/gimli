@@ -14,7 +14,7 @@ describe Gimli::Markup do
 
     output_without_pygments = "<p>a</p>\n<pre><code>x = 1</code></pre>\n<p>b</p>"
 
-    file = Gimli::File.new File.expand_path('../../fixtures/code_block.textile', __FILE__)
+    file = Gimli::MarkupFile.new File.expand_path('../../fixtures/code_block.textile', __FILE__)
     markup = Gimli::Markup.new file
 
     # Check if the html seems to be highlighted
@@ -36,7 +36,7 @@ describe Gimli::Markup do
     output_without_pygments = "<p>a</p>\n<pre><code>&lt;h1&gt;Abcåäö&lt;/h1&gt;\n&lt;img " +
                               "src=\"åäö.png\" alt=\"ÅÄÖ\" /&gt;</code></pre>"
 
-    file = Gimli::File.new File.expand_path('../../fixtures/code_block_with_utf8.textile', __FILE__)
+    file = Gimli::MarkupFile.new File.expand_path('../../fixtures/code_block_with_utf8.textile', __FILE__)
     markup = Gimli::Markup.new file
 
     # Check if the html seems to be highlighted
@@ -52,7 +52,7 @@ describe Gimli::Markup do
     output = "<p>a</p>\n<code>&lt;img src=\"åäö.png\" " +
              "alt=\"Abcåäö\" /&gt;</code>\n<p>b</p>"
 
-    file = Gimli::File.new File.expand_path('../../fixtures/code_with_utf8.textile', __FILE__)
+    file = Gimli::MarkupFile.new File.expand_path('../../fixtures/code_with_utf8.textile', __FILE__)
     markup = Gimli::Markup.new file
 
     markup.render.should == output
