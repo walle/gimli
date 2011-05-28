@@ -17,21 +17,8 @@ module Gimli
     end
 
     @files = []
-    if ARGV.flags.file?
-      target = ARGV.flags.file
-      target = File.join(target, '*') if File.directory?(target)
-    else
-      target = "*"
-    end
     
-    if ARGV.flags.recursive?
-      if target == '*'
-        target = Dir.pwd
-      end
-      target = File.join(target, '**', '*')
-    end
-    
-    Dir.glob(target).each do |file|
+    Gimli.match(ARGV.flags.file, ARGV.flags.recursive?).each do |file|
       Gimli.load_file(file)
     end
 
@@ -46,5 +33,22 @@ module Gimli
   def self.load_file(file)
     file = MarkupFile.new file
     @files << file if file.valid?
+  end
+  
+  # return a list of specified files
+  # @param [String] target
+  # @param [Bool] recursive
+  def self.match(target, recursive = false)
+    target ||= '*'
+    if File.directory?(target)
+      target = File.join(target, '*')
+    end
+    if recursive
+      if target == '*'
+        target = Dir.pwd
+      end
+      target = File.join(target, '**', '*')
+    end
+    Dir.glob(target)
   end
 end
