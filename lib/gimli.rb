@@ -5,6 +5,7 @@ require 'gimli/setup'
 require 'gimli/markupfile'
 require 'gimli/converter'
 require 'gimli/albino'
+require 'gimli/path'
 
 module Gimli
 
@@ -16,28 +17,9 @@ module Gimli
       return
     end
     
-    Gimli.gather(ARGV.flags.file, ARGV.flags.recursive?).each do |file|
+    Path.list_valid(ARGV.flags.file, ARGV.flags.recursive?).each do |file|
       converter = Converter.new(MarkupFile.new(file))
       converter.convert!
     end
-  end
-  
-  # return an array of paths to valid markup file matching the passed pattern
-  # @param [String] target
-  # @param [Bool] recursive
-  def self.gather(target, recursive = false)
-    if recursive
-      target ||= Dir.pwd
-      if File.directory?(target)
-        target = File.join(target, '**', '*')
-      end
-    else
-      target ||= '*'
-      if File.directory?(target)
-        target = File.join(target, '*')
-      end
-    end
-    print target
-    Dir.glob(target).keep_if { |file| MarkupFile.new(file).valid? }
   end
 end
