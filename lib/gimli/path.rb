@@ -2,10 +2,10 @@
 
 module Gimli
 
-  # class used to interact with directory structure
+  # Class used to interact with directory structure
   class Path
-    
-    # return an array of paths to valid markup file matching the passed pattern
+
+    # Return an array of paths to valid markup file matching the passed pattern
     # @param [String] target
     # @param [Bool] recursive
     def self.list_valid(target, recursive = false)
@@ -15,7 +15,7 @@ module Gimli
           target = File.join(target, '**', '*')
         end
       else
-        target ||= '*'
+        target ||= Dir.pwd
         if File.directory?(target)
           target = File.join(target, '*')
         end
