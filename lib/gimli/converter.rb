@@ -12,19 +12,21 @@ module Gimli
   class Converter
 
     # Initialize the converter with a File
-    # @param [Gimli::File] file The file to convert
-    def initialize(file)
-      @file = file
+    # @param [Array] files The list of Gimli::File to convert (passing a single file will still work)
+    def initialize(files)
+      @files = files
     end
 
     # Convert the file and save it as a PDF file
     def convert!
-      markup = Markup.new @file
-      html = convert_image_urls markup.render
+      @files.each do |file|
+        markup = Markup.new file
+        html = convert_image_urls markup.render
 
-      kit = pdf_kit(html)
+        kit = pdf_kit(html)
 
-      kit.to_file(output_file)
+        kit.to_file(output_file(file))
+      end
     end
 
     # Rewrite relative image urls to absolute
@@ -80,8 +82,13 @@ module Gimli
 
     # Generate the name of the output file
     # @return [String]
-    def output_file
-      ::File.join(output_dir, "#{@file.name}.pdf")
+    # @param [Gimli::File] file optionally, specify a file, otherwise assumes only one file was passed to constructor
+    def output_file(file = nil)
+      if file
+        ::File.join(output_dir, "#{file.name}.pdf")
+      else
+        ::File.join(output_dir, "#{@files.name}.pdf")
+      end
     end
   end
 end
