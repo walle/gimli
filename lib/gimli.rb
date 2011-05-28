@@ -17,7 +17,7 @@ module Gimli
       return
     end
     
-    @files = Path.list_valid(ARGV.flags.file, ARGV.flags.recursive?).map { |file| MarkupFile.new() }     
-    Converter.new(@files).convert!
+    @files = Path.list_valid(ARGV.flags.file, ARGV.flags.recursive?).map { |file| MarkupFile.new(file) }     
+    Converter.new(@files).convert!(merge = ARGV.flags.merge?)
   end
 end

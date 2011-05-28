@@ -20,6 +20,10 @@ module Gimli extend OptiFlagSet
     description 'Recurse current or target directory and convert all valid markup files'
     alternate_forms 'r'
   end
+  optional_switch_flag 'merge' do
+    description 'Merge markup files into single pdf file'
+    alternate_forms 'm'
+  end
   optional_switch_flag 'version' do
     description 'Show version information and quit'
     alternate_forms 'v'

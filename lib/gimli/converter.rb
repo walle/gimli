@@ -18,14 +18,20 @@ module Gimli
     end
 
     # Convert the file and save it as a PDF file
-    def convert!
+    def convert!(merge = false)
+      merged_contents = []
       @files.each do |file|
         markup = Markup.new file
         html = convert_image_urls markup.render
-
-        kit = pdf_kit(html)
-
-        kit.to_file(output_file(file))
+        if merge
+          merged_contents << html
+        else
+          kit = pdf_kit(html)
+          kit.to_file(output_file(file))
+        end
+      end
+      if !merged_contents.empty?
+        pdf_kit(merged_contents.join).to_file(::File.join(output_dir, "#{Dir.getwd.split('/').last}.pdf")) # TODO: I bet this doesn't work on windows  
       end
     end
 
