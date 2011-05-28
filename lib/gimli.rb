@@ -15,40 +15,29 @@ module Gimli
       puts "Version: #{Gimli::Version}"
       return
     end
-
-    @files = []
     
-    Gimli.match(ARGV.flags.file, ARGV.flags.recursive?).each do |file|
-      Gimli.load_file(file)
-    end
-
-    @files.each do |file|
-      converter = Converter.new file
+    Gimli.gather(ARGV.flags.file, ARGV.flags.recursive?).each do |file|
+      converter = Converter.new(MarkupFile.new(file))
       converter.convert!
     end
   end
-
-  # Add file to the files to be converted if it's valid
-  # @param [String] file
-  def self.load_file(file)
-    file = MarkupFile.new file
-    @files << file if file.valid?
-  end
   
-  # return a list of specified files
+  # return an array of paths to valid markup file matching the passed pattern
   # @param [String] target
   # @param [Bool] recursive
-  def self.match(target, recursive = false)
-    target ||= '*'
-    if File.directory?(target)
-      target = File.join(target, '*')
-    end
+  def self.gather(target, recursive = false)
     if recursive
-      if target == '*'
-        target = Dir.pwd
+      target ||= Dir.pwd
+      if File.directory?(target)
+        target = File.join(target, '**', '*')
       end
-      target = File.join(target, '**', '*')
+    else
+      target ||= '*'
+      if File.directory?(target)
+        target = File.join(target, '*')
+      end
     end
-    Dir.glob(target)
+    print target
+    Dir.glob(target).keep_if { |file| MarkupFile.new(file).valid? }
   end
 end
