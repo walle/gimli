@@ -14,6 +14,7 @@
 
 require 'digest/sha1'
 require 'cgi'
+require 'iconv'
 
 require 'github/markup'
 require 'nokogiri'
@@ -44,7 +45,8 @@ module Gimli
       data = extract_code(@data.dup)
       data = extract_tags(data)
       begin
-        data = GitHub::Markup.render(@filename, data.force_encoding('utf-8'))
+        data = data.force_encoding('utf-8') if data.respond_to? :force_encoding
+        data = GitHub::Markup.render(@filename, data)
         if data.nil?
           raise "There was an error converting #{@name} to HTML."
         end
@@ -54,7 +56,7 @@ module Gimli
       data = process_tags(data)
       data = process_code(data)
 
-      doc  = Nokogiri::HTML::DocumentFragment.parse(data.force_encoding('utf-8'))
+      doc  = Nokogiri::HTML::DocumentFragment.parse(data, 'UTF-8')
       yield doc if block_given?
       data = doc_to_html(doc)
 
@@ -63,7 +65,7 @@ module Gimli
     end
 
     def doc_to_html(doc)
-      doc.to_xhtml(:save_with => Nokogiri::XML::Node::SaveOptions::AS_XHTML)
+      doc.to_xhtml(:save_with => Nokogiri::XML::Node::SaveOptions::AS_XHTML, :encoding => 'UTF-8')
     end
 
     # Extract all tags into the tagmap and replace with placeholders.
@@ -226,7 +228,6 @@ module Gimli
     # @return [String] Returns the marked up String data.
     def process_code(data)
       return data if data.nil? || data.size.zero? || @codemap.size.zero?
-
       blocks    = []
       @codemap.each do |id, spec|
         next if spec[:output] # cached
@@ -235,6 +236,8 @@ module Gimli
         if code.lines.all? { |line| line =~ /\A\r?\n\Z/ || line =~ /^(  |\t)/ }
           code.gsub!(/^(  |\t)/m, '')
         end
+
+        code = Iconv.conv('ISO-8859-1//IGNORE', 'utf-8', code)
 
         blocks << [spec[:lang], code]
       end

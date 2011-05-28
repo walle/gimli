@@ -20,11 +20,22 @@ module Gimli
     # Convert the file and save it as a PDF file
     def convert!
       markup = Markup.new @file
-      html = markup.render
+      html = convert_image_urls markup.render
 
       kit = pdf_kit(html)
 
       kit.to_file(output_file)
+    end
+
+    # Rewrite relative image urls to absolute
+    # @param [String] html some html to parse
+    # @return [String] the html with all image urls replaced to absolute
+    def convert_image_urls(html)
+      html.scan(/<img[^>]+src="([^"]+)"/).each do |url|
+        html.gsub!(url[0], ::File.expand_path(url[0])) unless url[0] =~ /^https?/
+      end
+
+      html
     end
 
     # Load the pdfkit with html
