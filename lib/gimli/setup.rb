@@ -16,6 +16,10 @@ module Gimli extend OptiFlagSet
     description 'The stylesheet to use to override the standard'
     alternate_forms 's'
   end
+  optional_switch_flag 'recursive' do
+    description 'Recurse current or target directory and convert all valid markup files'
+    alternate_forms 'r'
+  end
   optional_switch_flag 'version' do
     description 'Show version information and quit'
     alternate_forms 'v'
