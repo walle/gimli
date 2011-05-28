@@ -2,7 +2,7 @@
 
 require 'gimli/version'
 require 'gimli/setup'
-require 'gimli/file'
+require 'gimli/markupfile'
 require 'gimli/converter'
 require 'gimli/albino'
 
@@ -34,7 +34,7 @@ module Gimli
   # Add file to the files to be converted if it's valid
   # @param [String] file
   def self.load_file(file)
-    file = File.new file
+    file = MarkupFile.new file
     @files << file if file.valid?
   end
 end
