@@ -5,7 +5,7 @@ require 'optiflag'
 # Set up the flags available
 module Gimli extend OptiFlagSet
   optional_flag 'file' do
-    description 'The file to convert if you do not want to convert all in the current folder'
+    description 'The file or folder to convert if you do not want to convert all in the current folder'
     alternate_forms 'f'
   end
   optional_flag 'outputdir' do
