@@ -103,13 +103,20 @@ module Gimli
 
     # Generate the name of the output file
     # @return [String]
-    # @param [Gimli::MarkupFile] file optionally, specify a file, otherwise assumes only one file was passed to constructor
+    # @param [Gimli::MarkupFile] file optionally, specify a file, otherwise use output filename
     def output_file(file = nil)
       if file
-        ::File.join(output_dir, "#{file.name}.pdf")
+        output_filename = file.name
+        if ARGV.flags.outputfilename? && @files.length == 1
+          output_filename = ARGV.flags.outputfilename
+        end
       else
-        ::File.join(output_dir, "#{@files.last.name}.pdf")
+        output_filename = Time.now.to_s.split(' ').join('_')
+        output_filename = @files.last.name if @files.length == 1 || ARGV.flags.merge?
+        output_filename = ARGV.flags.outputfilename if ARGV.flags.outputfilename?
       end
+
+      ::File.join(output_dir, "#{output_filename}.pdf")
     end
   end
 end
