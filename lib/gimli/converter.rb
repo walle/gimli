@@ -18,6 +18,7 @@ module Gimli
     end
 
     # Convert the file and save it as a PDF file
+    # @param [Boolean] merge if true a single pdf with all input files are created
     def convert!(merge = false)
       merged_contents = []
       @files.each do |file|
@@ -36,7 +37,7 @@ module Gimli
         else
           path = Dir.getwd
         end
-        pdf_kit(merged_contents.join).to_file(::File.join(output_dir, "#{path.split('/').last}.pdf")) # TODO: I bet this doesn't work on windows  
+        pdf_kit(merged_contents.join).to_file(::File.join(output_dir, "#{path.split('/').last}.pdf")) # TODO: I bet this doesn't work on windows
       end
     end
 
