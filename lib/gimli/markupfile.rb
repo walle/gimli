@@ -3,7 +3,7 @@
 module Gimli
 
   # Class used to load files and determine if they are valid
-  class File
+  class MarkupFile
     attr_reader :filename, :name, :data, :format
 
     # Accepted formats

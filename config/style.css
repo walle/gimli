@@ -4,6 +4,11 @@ body
   font-size: 12px;
 }
 
+.page-break
+{
+  page-break-before: always;
+}
+
 /* Code */
 code, tt
 {

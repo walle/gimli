@@ -1,9 +1,10 @@
 PATH
   remote: .
   specs:
-    gimli (0.1.2)
+    gimli (0.1.7)
       RedCloth
       albino
+      bundler
       creole
       github-markup
       nokogiri
