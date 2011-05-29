@@ -33,11 +33,6 @@ module Gimli
       end
 
       unless merged_contents.empty?
-        if ARGV.flags.file?
-          path = ARGV.flags.file
-        else
-          path = Dir.getwd
-        end
         html = merged_contents.join
         output_pdf(html, nil)
       end
@@ -78,26 +73,19 @@ module Gimli
     def load_stylesheets(kit)
       # Load standard stylesheet
       style = ::File.expand_path("../../../config/style.css", __FILE__)
-      kit.stylesheets << style
-
-      stylesheet
-
-      kit.stylesheets << stylesheet if ::File.exists?(stylesheet)
+      kit.stylesheets << (::File.exists?(stylesheet) ? stylesheet : style)
     end
 
     # Returns the selected stylesheet. Defaults to ./gimli.css
     # @return [String]
     def stylesheet
-      stylesheet = 'gimli.css'
-      stylesheet = ARGV.flags.stylesheet if ARGV.flags.stylesheet?
-      stylesheet
+      ARGV.flags.stylesheet? ? ARGV.flags.stylesheet : 'gimli.css'
     end
 
     # Returns the directory where to save the output. Defaults to ./
     # @return [String]
     def output_dir
-      output_dir = Dir.getwd
-      output_dir = ARGV.flags.outputdir if ARGV.flags.outputdir?
+      output_dir = ARGV.flags.outputdir? ? ARGV.flags.outputdir : Dir.getwd
       FileUtils.mkdir_p(output_dir) unless ::File.directory?(output_dir)
       output_dir
     end
@@ -106,18 +94,7 @@ module Gimli
     # @return [String]
     # @param [Gimli::MarkupFile] file optionally, specify a file, otherwise use output filename
     def output_file(file = nil)
-      if file
-        output_filename = file.name
-        if ARGV.flags.outputfilename? && @files.length == 1
-          output_filename = ARGV.flags.outputfilename
-        end
-      else
-        output_filename = Time.now.to_s.split(' ').join('_')
-        output_filename = @files.last.name if @files.length == 1 || ARGV.flags.merge?
-        output_filename = ARGV.flags.outputfilename if ARGV.flags.outputfilename?
-      end
-
-      ::File.join(output_dir, "#{output_filename}.pdf")
+      ::File.join(output_dir, "%s.pdf" % (file ? file.name : @files.last.name))
     end
   end
 end
