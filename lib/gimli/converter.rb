@@ -27,8 +27,7 @@ module Gimli
         if merge
           merged_contents << html
         else
-          kit = pdf_kit(html)
-          kit.to_file(output_file(file))
+          output_pdf(html, file)
         end
       end
 
@@ -38,7 +37,8 @@ module Gimli
         else
           path = Dir.getwd
         end
-        pdf_kit(merged_contents.join).to_file(::File.join(output_dir, "#{path.split('/').last}.pdf")) # TODO: I bet this doesn't work on windows
+        html = merged_contents.join
+        output_pdf(html, nil)
       end
     end
 
@@ -62,6 +62,14 @@ module Gimli
       load_stylesheets kit
 
       kit
+    end
+
+    # Create the pdf
+    # @param [String] html the html input
+    # @param [String] filename the name of the output file
+    def output_pdf(html, filename)
+      kit = pdf_kit(html)
+      kit.to_file(output_file(filename))
     end
 
     # Load the stylesheets to pdfkit loads the default and the user selected if any
@@ -95,12 +103,12 @@ module Gimli
 
     # Generate the name of the output file
     # @return [String]
-    # @param [Gimli::File] file optionally, specify a file, otherwise assumes only one file was passed to constructor
+    # @param [Gimli::MarkupFile] file optionally, specify a file, otherwise assumes only one file was passed to constructor
     def output_file(file = nil)
       if file
         ::File.join(output_dir, "#{file.name}.pdf")
       else
-        ::File.join(output_dir, "#{@files.name}.pdf")
+        ::File.join(output_dir, "#{@files.last.name}.pdf")
       end
     end
   end
