@@ -25,6 +25,7 @@ module Gimli
         markup = Markup.new file
         html = convert_image_urls markup.render
         if merge
+          html = "<div class=\"page-break\"></div>#{html}" unless merged_contents.empty?
           merged_contents << html
         else
           output_pdf(html, file)
