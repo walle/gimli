@@ -33,11 +33,6 @@ module Gimli
       end
 
       unless merged_contents.empty?
-        if ARGV.flags.file?
-          path = ARGV.flags.file
-        else
-          path = Dir.getwd
-        end
         html = merged_contents.join
         output_pdf(html, nil)
       end
@@ -78,26 +73,19 @@ module Gimli
     def load_stylesheets(kit)
       # Load standard stylesheet
       style = ::File.expand_path("../../../config/style.css", __FILE__)
-      kit.stylesheets << style
-
-      stylesheet
-
-      kit.stylesheets << stylesheet if ::File.exists?(stylesheet)
+      kit.stylesheets << (::File.exists?(stylesheet) ? stylesheet : style)
     end
 
     # Returns the selected stylesheet. Defaults to ./gimli.css
     # @return [String]
     def stylesheet
-      stylesheet = 'gimli.css'
-      stylesheet = ARGV.flags.stylesheet if ARGV.flags.stylesheet?
-      stylesheet
+      ARGV.flags.stylesheet? ? ARGV.flags.stylesheet : 'gimli.css'
     end
 
     # Returns the directory where to save the output. Defaults to ./
     # @return [String]
     def output_dir
-      output_dir = Dir.getwd
-      output_dir = ARGV.flags.outputdir if ARGV.flags.outputdir?
+      output_dir = ARGV.flags.outputdir? ? ARGV.flags.outputdir : Dir.getwd
       FileUtils.mkdir_p(output_dir) unless ::File.directory?(output_dir)
       output_dir
     end
