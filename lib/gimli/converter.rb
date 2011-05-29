@@ -73,7 +73,8 @@ module Gimli
     def load_stylesheets(kit)
       # Load standard stylesheet
       style = ::File.expand_path("../../../config/style.css", __FILE__)
-      kit.stylesheets << (::File.exists?(stylesheet) ? stylesheet : style)
+      kit.stylesheets << style
+      kit.stylesheets << stylesheet if ::File.exists?(stylesheet)
     end
 
     # Returns the selected stylesheet. Defaults to ./gimli.css
