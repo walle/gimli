@@ -21,10 +21,8 @@ module Gimli
           target = File.join(target, '*')
         end
       end
-      files = Dir.glob(target).keep_if { |file| MarkupFile.new(file).valid? }
-      files = [files] unless files.is_a? Array
 
-      files
+      Dir.glob(target).keep_if { |file| MarkupFile.new(file).valid? }
     end
   end
 end
