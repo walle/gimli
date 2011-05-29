@@ -24,7 +24,19 @@ describe Gimli::Converter do
     converter = Gimli::Converter.new [file]
     mock(converter).output_dir { '/tmp/out' }
 
-    converter.output_file.should == "/tmp/out/#{name}.pdf"
+    converter.output_file(file).should == "/tmp/out/#{name}.pdf"
+  end
+
+  it 'should give the correct output_file when one is set' do
+    file = Gimli::MarkupFile.new 'fake'
+    output_filename = 'my_file'
+
+    converter = Gimli::Converter.new [file]
+    mock(converter).output_dir { Dir.getwd }
+    mock(ARGV).flags.mock!.outputfilename? { true }
+    mock(ARGV).flags.mock!.outputfilename { output_filename }
+
+    converter.output_file.should == File.join(Dir.getwd, "#{output_filename}.pdf")
   end
 
   it 'should give the correct output_dir when none given' do

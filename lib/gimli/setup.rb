@@ -16,6 +16,10 @@ module Gimli extend OptiFlagSet
     description 'The stylesheet to use to override the standard'
     alternate_forms 's'
   end
+  optional_flag 'outputfilename' do
+    description 'Sets the name of the output file. Only used with single file and in merge mode'
+    alternate_forms 'n'
+  end
   optional_switch_flag 'recursive' do
     description 'Recurse current or target directory and convert all valid markup files'
     alternate_forms 'r'
