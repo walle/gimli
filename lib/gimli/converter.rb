@@ -31,7 +31,8 @@ module Gimli
           kit.to_file(output_file(file))
         end
       end
-      if !merged_contents.empty?
+
+      unless merged_contents.empty?
         if ARGV.flags.file?
           path = ARGV.flags.file
         else
