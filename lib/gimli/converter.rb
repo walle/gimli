@@ -12,19 +12,34 @@ module Gimli
   class Converter
 
     # Initialize the converter with a File
-    # @param [Gimli::File] file The file to convert
-    def initialize(file)
-      @file = file
+    # @param [Array] files The list of Gimli::File to convert (passing a single file will still work)
+    def initialize(files)
+      @files = files
     end
 
     # Convert the file and save it as a PDF file
-    def convert!
-      markup = Markup.new @file
-      html = convert_image_urls markup.render
+    # @param [Boolean] merge if true a single pdf with all input files are created
+    def convert!(merge = false)
+      merged_contents = []
+      @files.each do |file|
+        markup = Markup.new file
+        html = convert_image_urls markup.render
+        if merge
+          merged_contents << html
+        else
+          output_pdf(html, file)
+        end
+      end
 
-      kit = pdf_kit(html)
-
-      kit.to_file(output_file)
+      unless merged_contents.empty?
+        if ARGV.flags.file?
+          path = ARGV.flags.file
+        else
+          path = Dir.getwd
+        end
+        html = merged_contents.join
+        output_pdf(html, nil)
+      end
     end
 
     # Rewrite relative image urls to absolute
@@ -47,6 +62,14 @@ module Gimli
       load_stylesheets kit
 
       kit
+    end
+
+    # Create the pdf
+    # @param [String] html the html input
+    # @param [String] filename the name of the output file
+    def output_pdf(html, filename)
+      kit = pdf_kit(html)
+      kit.to_file(output_file(filename))
     end
 
     # Load the stylesheets to pdfkit loads the default and the user selected if any
@@ -80,8 +103,13 @@ module Gimli
 
     # Generate the name of the output file
     # @return [String]
-    def output_file
-      ::File.join(output_dir, "#{@file.name}.pdf")
+    # @param [Gimli::MarkupFile] file optionally, specify a file, otherwise assumes only one file was passed to constructor
+    def output_file(file = nil)
+      if file
+        ::File.join(output_dir, "#{file.name}.pdf")
+      else
+        ::File.join(output_dir, "#{@files.last.name}.pdf")
+      end
     end
   end
 end

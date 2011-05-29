@@ -8,6 +8,7 @@ module Gimli
     # Return an array of paths to valid markup file matching the passed pattern
     # @param [String] target
     # @param [Bool] recursive
+    # @return [Array] an array of valid files
     def self.list_valid(target, recursive = false)
       if recursive
         target ||= Dir.pwd
@@ -20,6 +21,7 @@ module Gimli
           target = File.join(target, '*')
         end
       end
+
       Dir.glob(target).keep_if { |file| MarkupFile.new(file).valid? }
     end
   end

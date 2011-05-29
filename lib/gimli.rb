@@ -16,10 +16,8 @@ module Gimli
       puts "Version: #{Gimli::Version}"
       return
     end
-    
-    Path.list_valid(ARGV.flags.file, ARGV.flags.recursive?).each do |file|
-      converter = Converter.new(MarkupFile.new(file))
-      converter.convert!
-    end
+
+    @files = Path.list_valid(ARGV.flags.file, ARGV.flags.recursive?).map { |file| MarkupFile.new(file) }
+    Converter.new(@files).convert!(ARGV.flags.merge?)
   end
 end

@@ -10,7 +10,7 @@ describe Gimli::Converter do
     name = 'my_file'
     mock(file).name { name }
 
-    converter = Gimli::Converter.new file
+    converter = Gimli::Converter.new [file]
     mock(converter).output_dir { Dir.getwd }
 
     converter.output_file.should == File.join(Dir.getwd, "#{name}.pdf")
@@ -21,7 +21,7 @@ describe Gimli::Converter do
     name = 'my_file'
     mock(file).name { name }
 
-    converter = Gimli::Converter.new file
+    converter = Gimli::Converter.new [file]
     mock(converter).output_dir { '/tmp/out' }
 
     converter.output_file.should == "/tmp/out/#{name}.pdf"
