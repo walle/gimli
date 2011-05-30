@@ -86,8 +86,8 @@ describe Gimli::Converter do
     file = Gimli::MarkupFile.new 'fake'
     converter = Gimli::Converter.new file
 
-    html = '<p>foo</p><img src="test.jpg" alt="" /><p>bar</p><img src="test2.jpg" alt="" />'
-    valid_html = "<p>foo</p><img src=\"#{File.expand_path('test.jpg')}\" alt=\"\" /><p>bar</p><img src=\"#{File.expand_path('test2.jpg')}\" alt=\"\" />"
+    html = '<p>foo</p><img src="test.jpg" alt="" /><p>bar</p><img src="../test2.jpg" alt="" />'
+    valid_html = "<p>foo</p><img src=\"#{File.expand_path('test.jpg')}\" alt=\"\" /><p>bar</p><img src=\"#{File.expand_path('../test2.jpg')}\" alt=\"\" />"
 
     converter.convert_image_urls(html).should == valid_html
   end
