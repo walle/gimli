@@ -94,11 +94,10 @@ describe Gimli::Converter do
   
   it 'should generate absolute image urls based on source file location' do
     file = Gimli::MarkupFile.new('./spec/fixtures/code_with_utf8.textile')
-    converter = Gimli::Converter.new(file)
     
     valid_html = "<p>a</p>\n<code>&lt;img src=\"#{File.expand_path('./spec/fixtures/åäö.png')}\" alt=\"Abcåäö\" /&gt;</code>\n<p>b</p>"
     
-    converter.convert_image_urls(Gimli::Markup.new(file).render).should == valid_html
+    Gimli::Markup.new(file).render.should == valid_html
   end
 
   it 'should not rewrite non relative urls' do
