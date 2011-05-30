@@ -29,6 +29,7 @@ module Gimli
     # @return [Gimli::Markup]
     def initialize(file)
       @filename = file.filename
+      @location = ::File.expand_path(@filename).chomp(::File.basename(@filename))
       @name = file.name
       @data = file.data
       @format = file.format
@@ -131,7 +132,7 @@ module Gimli
       return if parts.size.zero?
 
       name  = parts[0].strip
-      path  = name
+      path  = ::File.expand_path(name, @location)
 
       if path
         opts = parse_image_tag_options(tag)
