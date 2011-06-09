@@ -1,4 +1,1 @@
-pkg/
-doc/
-.yardoc/
-
+.DS_Store
