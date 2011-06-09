@@ -25,24 +25,17 @@ GEM
     creole (0.4.2)
     diff-lcs (1.1.2)
     expression_parser (0.9.0)
-    ffi (1.0.7)
-      rake (>= 0.8.7)
     github-markup (0.5.3)
     guard (0.3.4)
       thor (~> 0.14.6)
     guard-rspec (0.3.0)
       guard (>= 0.2.2)
-    libnotify (0.4.0)
-      ffi (>= 0.6.2)
     nokogiri (1.4.4)
     optiflag (0.7)
     org-ruby (0.5.3)
       rubypants (>= 0.2.0)
     pdfkit (0.5.0)
     posix-spawn (0.3.6)
-    rake (0.8.7)
-    rb-inotify (0.8.4)
-      ffi (>= 0.5.0)
     redcarpet (1.12.2)
     rr (1.0.2)
     rspec (2.5.0)
@@ -68,8 +61,6 @@ DEPENDENCIES
   gimli!
   guard
   guard-rspec
-  libnotify
-  rb-inotify
   rr
   rspec
   yard
