@@ -13,18 +13,19 @@ module Gimli
 
     # Initialize the converter with a File
     # @param [Array] files The list of Gimli::File to convert (passing a single file will still work)
-    def initialize(files)
+    def initialize(files, options={})
       @files = files
+      @options = options
     end
-
+      
     # Convert the file and save it as a PDF file
     # @param [Boolean] merge if true a single pdf with all input files are created
-    def convert!(merge = false)
+    def convert!
       merged_contents = []
       @files.each do |file|
         markup = Markup.new file
         html = convert_image_urls markup.render
-        if merge
+        if @options[:merge]
           html = "<div class=\"page-break\"></div>#{html}" unless merged_contents.empty?
           merged_contents << html
         else
@@ -34,7 +35,7 @@ module Gimli
 
       unless merged_contents.empty?
         html = merged_contents.join
-        output_pdf(html, nil)
+        output_pdf(html, @options[:filename])
       end
     end
 
@@ -65,7 +66,8 @@ module Gimli
     # @param [String] filename the name of the output file
     def output_pdf(html, filename)
       kit = pdf_kit(html)
-      kit.to_file(output_file(filename))
+      name = filename.is_a?(String) ? filename : output_file(filename) #TODO: this is just terrible
+      kit.to_file(name)
     end
 
     # Load the stylesheets to pdfkit loads the default and the user selected if any
@@ -80,13 +82,13 @@ module Gimli
     # Returns the selected stylesheet. Defaults to ./gimli.css
     # @return [String]
     def stylesheet
-      ARGV.flags.stylesheet? ? ARGV.flags.stylesheet : 'gimli.css'
+      @options[:stylesheet] ||= 'gimli.css'
     end
 
     # Returns the directory where to save the output. Defaults to ./
     # @return [String]
     def output_dir
-      output_dir = ARGV.flags.outputdir? ? ARGV.flags.outputdir : Dir.getwd
+      output_dir = @options[:output_directory] ? @options[:output_directory] : Dir.getwd
       FileUtils.mkdir_p(output_dir) unless ::File.directory?(output_dir)
       output_dir
     end
@@ -95,7 +97,18 @@ module Gimli
     # @return [String]
     # @param [Gimli::MarkupFile] file optionally, specify a file, otherwise use output filename
     def output_file(file = nil)
-      ::File.join(output_dir, "%s.pdf" % (file ? file.name : @files.last.name))
+      if file
+        output_filename = file.name
+        if @options[:filename] && @files.length == 1
+          output_filename = @options[:filename]
+        end
+      else
+        output_filename = Time.now.to_s.split(' ').join('_')
+        output_filename = @files.last.name if @files.length == 1 || @options[:merge]
+        output_filename = @options[:filename] if @options[:filename]
+      end
+
+      ::File.join(output_dir, "#{output_filename}.pdf")
     end
   end
 end

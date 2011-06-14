@@ -8,7 +8,6 @@ PATH
       creole
       github-markup
       nokogiri
-      optiflag
       org-ruby
       pdfkit
       redcarpet
@@ -31,12 +30,11 @@ GEM
     guard-rspec (0.3.0)
       guard (>= 0.2.2)
     nokogiri (1.4.4)
-    optiflag (0.7)
     org-ruby (0.5.3)
       rubypants (>= 0.2.0)
     pdfkit (0.5.0)
     posix-spawn (0.3.6)
-    redcarpet (1.12.2)
+    redcarpet (1.14.2)
     rr (1.0.2)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
@@ -51,7 +49,7 @@ GEM
     wikicloth (0.6.3)
       builder
       expression_parser
-    wkhtmltopdf-binary (0.9.5.1)
+    wkhtmltopdf-binary (0.9.5.3)
     yard (0.6.8)
 
 PLATFORMS

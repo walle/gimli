@@ -1,23 +1,23 @@
 # encoding: utf-8
 
 require 'gimli/version'
-require 'gimli/setup'
 require 'gimli/markupfile'
 require 'gimli/converter'
 require 'gimli/albino'
 require 'gimli/path'
+require 'gimli/optionparser'
 
 module Gimli
 
   # Starts the processing of selected files
   def self.process!
-
-    if ARGV.flags.version?
-      puts "Version: #{Gimli::Version}"
-      return
+    files = []
+    options = Parser.parse!(ARGV)
+    
+    ARGV.each do |target|
+      files += Path.list_valid(target, options[:recursive]).map { |file| MarkupFile.new(file) }
     end
-
-    @files = Path.list_valid(ARGV.flags.file, ARGV.flags.recursive?).map { |file| MarkupFile.new(file) }
-    Converter.new(@files).convert!(ARGV.flags.merge?)
+    
+    Converter.new(files, options).convert!
   end
 end
