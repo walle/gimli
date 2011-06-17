@@ -31,11 +31,9 @@ describe Gimli::Converter do
     file = Gimli::MarkupFile.new 'fake'
     output_filename = 'my_file'
 
-    converter = Gimli::Converter.new [file]
+    converter = Gimli::Converter.new([file], :filename => 'my_file')
     mock(converter).output_dir { Dir.getwd }
-    mock(ARGV).flags.mock!.outputfilename? { true }
-    mock(ARGV).flags.mock!.outputfilename { output_filename }
-
+    
     converter.output_file.should == File.join(Dir.getwd, "#{output_filename}.pdf")
   end
 
@@ -52,10 +50,8 @@ describe Gimli::Converter do
     dir = '/tmp/out'
 
     file = Gimli::MarkupFile.new 'fake'
-    converter = Gimli::Converter.new file
+    converter = Gimli::Converter.new(file, :output_directory => dir)
 
-    mock(ARGV).flags.mock!.outputdir? { true }
-    mock(ARGV).flags.mock!.outputdir { dir }
     mock(File).directory?(dir) { true }
 
     converter.output_dir.should == dir
@@ -65,19 +61,15 @@ describe Gimli::Converter do
     file = Gimli::MarkupFile.new 'fake'
     converter = Gimli::Converter.new file
 
-    mock(ARGV).flags.mock!.stylesheet? { false }
 
     converter.stylesheet.should == 'gimli.css'
   end
 
   it 'should use stylesheet if given' do
     file = Gimli::MarkupFile.new 'fake'
-    converter = Gimli::Converter.new file
-
     style = '/home/me/gimli/my-style.css'
-
-    mock(ARGV).flags.mock!.stylesheet? { true }
-    mock(ARGV).flags.mock!.stylesheet { style }
+    
+    converter = Gimli::Converter.new(file, :stylesheet => style)
 
     converter.stylesheet.should == style
   end
