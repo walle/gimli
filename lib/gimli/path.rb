@@ -22,7 +22,8 @@ module Gimli
         end
       end
 
-      Dir.glob(target).keep_if { |file| MarkupFile.new(file).valid? }
+      # Use select to support ruby 1.8
+      Dir.glob(target).select { |file| MarkupFile.new(file).valid? }
     end
   end
 end
