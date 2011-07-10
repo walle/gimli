@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'wikicloth', '~> 0.6.3'
 
   s.add_dependency 'albino', '~> 1.3.3'
-  s.add_dependency 'nokogiri', '~> 1.5.0'
+  s.add_dependency 'nokogiri', '~> 1.4.4'
 
   s.add_dependency 'wkhtmltopdf-binary', '~> 0.9.5.3'
   s.add_dependency 'pdfkit', '~> 0.5.2'
