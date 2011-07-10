@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = %w[README.textile LICENSE]
 
-  s.add_dependency 'bundler'
   s.add_dependency 'github-markup'
   s.add_dependency 'redcarpet'
   s.add_dependency 'RedCloth'
@@ -34,6 +33,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rr'
+  s.add_development_dependency 'bundler'
 
   s.files = Dir.glob("{bin,lib,spec,config}/**/*") + ['LICENSE', 'README.textile']
   s.executables = ['gimli']
