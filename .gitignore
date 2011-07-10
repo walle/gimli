@@ -1,6 +1,4 @@
 pkg/
 doc/
 .yardoc/
-
-
 Gemfile.lock
