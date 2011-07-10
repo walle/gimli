@@ -12,7 +12,7 @@ module Gimli
   class Converter
 
     # Initialize the converter with a File
-    # @param [Array] files The list of Gimli::File to convert (passing a single file will still work)
+    # @param [Array] files The list of Gimli::MarkupFile to convert (passing a single file will still work)
     def initialize(files)
       @files = files
     end
@@ -23,7 +23,7 @@ module Gimli
       merged_contents = []
       @files.each do |file|
         markup = Markup.new file
-        html = convert_image_urls markup.render
+        html = convert_image_urls markup.render, file.filename
         if merge
           html = "<div class=\"page-break\"></div>#{html}" unless merged_contents.empty?
           merged_contents << html
@@ -41,9 +41,10 @@ module Gimli
     # Rewrite relative image urls to absolute
     # @param [String] html some html to parse
     # @return [String] the html with all image urls replaced to absolute
-    def convert_image_urls(html)
+    def convert_image_urls(html, filename)
+      dir_string = ::File.dirname(::File.expand_path(filename))
       html.scan(/<img[^>]+src="([^"]+)"/).each do |url|
-        html.gsub!(url[0], ::File.expand_path(url[0])) unless url[0] =~ /^https?/
+        html.gsub!(url[0], ::File.expand_path(url[0], dir_string)) unless url[0] =~ /^https?/
       end
 
       html
