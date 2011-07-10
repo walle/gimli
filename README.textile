@@ -21,11 +21,11 @@ h3. Images
 
 Images can be included by absolute url on your hard drive or a absolute url on the Internet. You can also refer to an image relative from the markup file. Example in textile.
 
-```
+<pre>
 !/tmp/test.jpg!
 !http://upload.wikimedia.org/wikipedia/en/b/bc/Wiki.png!
 !../images/test.jpg!
-```
+</pre>
 
 h2. Installation
 
