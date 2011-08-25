@@ -26,8 +26,9 @@ module Gimli
     # Initialize a new Markup object.
     #
     # @param [Gimli::File] file  The Gimli::File to process
+    # @param [Boolean] do_remove_yaml_front_matter Should we remove the front matter?
     # @return [Gimli::Markup]
-    def initialize(file)
+    def initialize(file, do_remove_yaml_front_matter = false)
       @filename = file.filename
       @name = file.name
       @data = file.data
@@ -35,6 +36,7 @@ module Gimli
       @tagmap = {}
       @codemap = {}
       @premap = {}
+      @do_remove_yaml_front_matter = do_remove_yaml_front_matter
     end
 
     # Render the content with Gollum wiki syntax on top of the file's own
@@ -42,7 +44,8 @@ module Gimli
     #
     # @return [String] The formatted data
     def render
-      data = remove_yaml_front_matter(@data.dup)
+      data = @data.dup
+      data = remove_yaml_front_matter(data) if @do_remove_yaml_front_matter
       data = extract_code(data)
       data = extract_tags(data)
       begin
@@ -69,17 +72,13 @@ module Gimli
       doc.to_xhtml(:save_with => Nokogiri::XML::Node::SaveOptions::AS_XHTML, :encoding => 'UTF-8')
     end
 
-    # Removes YAML Front Matter if the removefrontmatter flag is true. 
+    # Removes YAML Front Matter
     # Useful if you want to PDF your Jekyll site.
     #
     # @param [String] data - The raw string data.
     # @return [String] Returns the string data with frontmatter removed
     def remove_yaml_front_matter(data)
-      if ARGV.flags.removefrontmatter? 
-        data.gsub(/^(---\s*\n.*?\n?)^(---\s*$\n?)/m, '')
-      else
-        data
-      end
+      data.gsub(/^(---\s*\n.*?\n?)^(---\s*$\n?)/m, '')
     end
 
     # Extract all tags into the tagmap and replace with placeholders.
