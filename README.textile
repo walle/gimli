@@ -49,6 +49,8 @@ To apply some style to the pdf or override the standard style add a css file in 
 
 Standard behavior is for gimli to output the files in the current directory. To override this use the @-o@ flag to point out another output directory. Gimli tries to create it if it doesn't exist.
 
+Gimli also plays nice with Jekyll style markup files. You can pass gimli the @-y@ flag to have it remove Jekyll's YAML front matter from the top of your markup files. Allowing you to use gimli & Jekyll together on your Blog/Resume/Catalogue to create nicely formatted versions for online and offline viewing.
+
 Run @gimli -h@ for a full list of options available
 
 h2. Syntax highlighting

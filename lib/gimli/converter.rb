@@ -13,21 +13,27 @@ module Gimli
 
     # Initialize the converter with a File
     # @param [Array] files The list of Gimli::MarkupFile to convert (passing a single file will still work)
-    def initialize(files, output_filename = nil, output_dir = nil, stylesheet = nil)
+    # @param [Boolean] merge
+    # @param [Boolean] remove_front_matter
+    # @param [String] output_filename
+    # @param [String] output_dir
+    # @param [String] stylesheet
+    def initialize(files, merge = false, remove_front_matter = false, output_filename = nil, output_dir = nil, stylesheet = nil)
       @files = files
+      @merge = merge
+      @remove_front_matter = remove_front_matter
       @output_filename = output_filename
       @output_dir = output_dir
       @stylesheet = stylesheet
     end
 
     # Convert the file and save it as a PDF file
-    # @param [Boolean] merge if true a single pdf with all input files are created
-    def convert!(merge = false)
+    def convert!
       merged_contents = []
       @files.each do |file|
-        markup = Markup.new file
+        markup = Markup.new file, @remove_front_matter
         html = convert_image_urls markup.render, file.filename
-        if merge
+        if @merge
           html = "<div class=\"page-break\"></div>#{html}" unless merged_contents.empty?
           merged_contents << html
         else
@@ -106,7 +112,7 @@ module Gimli
         end
       else
         output_filename = Time.now.to_s.split(' ').join('_')
-        output_filename = @files.last.name if @files.length == 1 || ARGV.flags.merge?
+        output_filename = @files.last.name if @files.length == 1 || @merge
         output_filename = @output_filename unless @output_filename.nil?
       end
 
