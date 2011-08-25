@@ -42,7 +42,8 @@ module Gimli
     #
     # @return [String] The formatted data
     def render
-      data = extract_code(@data.dup)
+      data = remove_yaml_front_matter(@data.dup)
+      data = extract_code(data)
       data = extract_tags(data)
       begin
         data = data.force_encoding('utf-8') if data.respond_to? :force_encoding
@@ -66,6 +67,19 @@ module Gimli
 
     def doc_to_html(doc)
       doc.to_xhtml(:save_with => Nokogiri::XML::Node::SaveOptions::AS_XHTML, :encoding => 'UTF-8')
+    end
+
+    # Removes YAML Front Matter if the removefrontmatter flag is true. 
+    # Useful if you want to PDF your Jekyll site.
+    #
+    # @param [String] data - The raw string data.
+    # @return [String] Returns the string data with frontmatter removed
+    def remove_yaml_front_matter(data)
+      if ARGV.flags.removefrontmatter? 
+        data.gsub(/^(---\s*\n.*?\n?)^(---\s*$\n?)/m, '')
+      else
+        data
+      end
     end
 
     # Extract all tags into the tagmap and replace with placeholders.
