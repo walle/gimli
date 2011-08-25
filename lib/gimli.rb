@@ -14,6 +14,6 @@ module Gimli
 
 
     @files = Path.list_valid(file, recursive).map { |file| MarkupFile.new(file) }
-    Converter.new(@files, output_filename, output_dir, stylesheet).convert!(merge)
+    Converter.new(@files, merge, output_filename, output_dir, stylesheet).convert!
   end
 end
