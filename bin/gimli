@@ -4,5 +4,10 @@ $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)) + '/../lib/')
 
 require 'gimli'
 
-Gimli.process!
+if ARGV.flags.version?
+  puts "Version: #{Gimli::Version}"
+  exit
+end
+
+Gimli.process! ARGV.flags.file, ARGV.flags.recursive?, ARGV.flags.merge?, ARGV.flags.outputfilename, ARGV.flags.outputdir, ARGV.flags.stylesheet
 

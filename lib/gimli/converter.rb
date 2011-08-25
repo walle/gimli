@@ -13,8 +13,11 @@ module Gimli
 
     # Initialize the converter with a File
     # @param [Array] files The list of Gimli::MarkupFile to convert (passing a single file will still work)
-    def initialize(files)
+    def initialize(files, output_filename = nil, output_dir = nil, stylesheet = nil)
       @files = files
+      @output_filename = output_filename
+      @output_dir = output_dir
+      @stylesheet = stylesheet
     end
 
     # Convert the file and save it as a PDF file
@@ -81,13 +84,13 @@ module Gimli
     # Returns the selected stylesheet. Defaults to ./gimli.css
     # @return [String]
     def stylesheet
-      ARGV.flags.stylesheet? ? ARGV.flags.stylesheet : 'gimli.css'
+      @stylesheet.nil? ? 'gimli.css' : @stylesheet
     end
 
     # Returns the directory where to save the output. Defaults to ./
     # @return [String]
     def output_dir
-      output_dir = ARGV.flags.outputdir? ? ARGV.flags.outputdir : Dir.getwd
+      output_dir = @output_dir.nil? ? Dir.getwd : @output_dir
       FileUtils.mkdir_p(output_dir) unless ::File.directory?(output_dir)
       output_dir
     end
@@ -98,13 +101,13 @@ module Gimli
     def output_file(file = nil)
       if file
         output_filename = file.name
-        if ARGV.flags.outputfilename? && @files.length == 1
-          output_filename = ARGV.flags.outputfilename
+        if !@output_filename.nil? && @files.length == 1
+          output_filename = @output_filename
         end
       else
         output_filename = Time.now.to_s.split(' ').join('_')
         output_filename = @files.last.name if @files.length == 1 || ARGV.flags.merge?
-        output_filename = ARGV.flags.outputfilename if ARGV.flags.outputfilename?
+        output_filename = @output_filename unless @output_filename.nil?
       end
 
       ::File.join(output_dir, "#{output_filename}.pdf")
