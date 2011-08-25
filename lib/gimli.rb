@@ -10,14 +10,10 @@ require 'gimli/path'
 module Gimli
 
   # Starts the processing of selected files
-  def self.process!
+  def self.process!(file, recursive = false, merge = false, output_filename = nil, output_dir = nil, stylesheet = nil)
 
-    if ARGV.flags.version?
-      puts "Version: #{Gimli::Version}"
-      return
-    end
 
-    @files = Path.list_valid(ARGV.flags.file, ARGV.flags.recursive?).map { |file| MarkupFile.new(file) }
-    Converter.new(@files).convert!(ARGV.flags.merge?)
+    @files = Path.list_valid(file, recursive).map { |file| MarkupFile.new(file) }
+    Converter.new(@files, output_filename, output_dir, stylesheet).convert!(merge)
   end
 end
