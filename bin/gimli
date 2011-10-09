@@ -9,5 +9,5 @@ if ARGV.flags.version?
   exit
 end
 
-Gimli.process! ARGV.flags.file, ARGV.flags.recursive?, ARGV.flags.merge?, ARGV.flags.removefrontmatter, ARGV.flags.outputfilename, ARGV.flags.outputdir, ARGV.flags.stylesheet
+Gimli.process! ARGV.flags.file, ARGV.flags.recursive?, ARGV.flags.merge?, ARGV.flags.pagenumbers?, ARGV.flags.removefrontmatter, ARGV.flags.outputfilename, ARGV.flags.outputdir, ARGV.flags.stylesheet
 

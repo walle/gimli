@@ -31,7 +31,7 @@ describe Gimli::Converter do
     file = Gimli::MarkupFile.new 'fake'
     output_filename = 'my_file'
 
-    converter = Gimli::Converter.new [file], false, false, output_filename
+    converter = Gimli::Converter.new [file], false, false, false, output_filename
     mock(converter).output_dir { Dir.getwd }
 
     converter.output_file.should == File.join(Dir.getwd, "#{output_filename}.pdf")
@@ -50,7 +50,7 @@ describe Gimli::Converter do
     dir = '/tmp/out'
 
     file = Gimli::MarkupFile.new 'fake'
-    converter = Gimli::Converter.new file, false, false, nil, dir
+    converter = Gimli::Converter.new file, false, false, false, nil, dir
 
     mock(File).directory?(dir) { true }
 
@@ -68,7 +68,7 @@ describe Gimli::Converter do
     file = Gimli::MarkupFile.new 'fake'
     stylesheet = '/home/me/gimli/my-style.css'
 
-    converter = Gimli::Converter.new file, false, false, nil, nil, stylesheet
+    converter = Gimli::Converter.new file, false, false, false, nil, nil, stylesheet
 
     converter.stylesheet.should == stylesheet
   end
