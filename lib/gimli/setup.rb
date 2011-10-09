@@ -28,6 +28,10 @@ module Gimli extend OptiFlagSet
     description 'Merge markup files into single pdf file'
     alternate_forms 'm'
   end
+  optional_switch_flag 'pagenumbers' do
+    description 'Print the page numbers in the lower right corner of all pages in pdf'
+    alternate_forms 'p'
+  end
   optional_switch_flag 'removefrontmatter' do
     description 'Remove yaml frontmatter from your files.'
     alternate_forms 'y'

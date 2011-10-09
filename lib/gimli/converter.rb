@@ -14,13 +14,15 @@ module Gimli
     # Initialize the converter with a File
     # @param [Array] files The list of Gimli::MarkupFile to convert (passing a single file will still work)
     # @param [Boolean] merge
+    # @param [Boolean] pagenumbers
     # @param [Boolean] remove_front_matter
     # @param [String] output_filename
     # @param [String] output_dir
     # @param [String] stylesheet
-    def initialize(files, merge = false, remove_front_matter = false, output_filename = nil, output_dir = nil, stylesheet = nil)
+    def initialize(files, merge = false, pagenumbers = false, remove_front_matter = false, output_filename = nil, output_dir = nil, stylesheet = nil)
       @files = files
       @merge = merge
+      @pagenumbers = pagenumbers
       @remove_front_matter = remove_front_matter
       @output_filename = output_filename
       @output_dir = output_dir
@@ -63,7 +65,9 @@ module Gimli
     # @param [String] html
     # @return [PDFKit]
     def pdf_kit(html)
-      kit = PDFKit.new(html)
+      options = {}
+      options.merge!({ :footer_right => '[page]/[toPage]' }) if @pagenumbers
+      kit = PDFKit.new(html, options)
 
       load_stylesheets kit
 
