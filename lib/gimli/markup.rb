@@ -14,7 +14,6 @@
 
 require 'digest/sha1'
 require 'cgi'
-require 'iconv'
 
 require 'github/markup'
 require 'nokogiri'
@@ -250,7 +249,10 @@ module Gimli
           code.gsub!(/^(  |\t)/m, '')
         end
 
-        code = Iconv.conv('ISO-8859-1//IGNORE', 'utf-8', code)
+        if RUBY_VERSION =~ /1\.8\../
+          require 'iconv'
+          code = Iconv.conv('ISO-8859-1//IGNORE', 'utf-8', code)
+        end
 
         blocks << [spec[:lang], code]
       end
