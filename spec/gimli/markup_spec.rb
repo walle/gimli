@@ -27,13 +27,13 @@ describe Gimli::Markup do
 
   it 'should give correct code block for utf8' do
 
-    output_with_pygments = "<p>a</p>\n<div class=\"highlight\"><pre>" +
+    output_with_pygments = "<p>Abcåäö</p>\n<div class=\"highlight\"><pre>" +
                            "<span class=\"nt\">&lt;h1&gt;</span>Abcåäö<span class=\"nt\">&lt;/h1&gt;</span>\n" +
                            "<span class=\"nt\">&lt;img</span> <span class=\"na\">src=</span><span class=\"s\">\"åäö.png\"" +
                            "</span> <span class=\"na\">alt=</span><span class=\"s\">\"ÅÄÖ\"" +
                            "</span> <span class=\"nt\">/&gt;</span>\n</pre>\n</div>\n"
 
-    output_without_pygments = "<p>a</p>\n<pre><code>&lt;h1&gt;Abcåäö&lt;/h1&gt;\n&lt;img " +
+    output_without_pygments = "<p>Abcåäö</p>\n<pre><code>&lt;h1&gt;Abcåäö&lt;/h1&gt;\n&lt;img " +
                               "src=\"åäö.png\" alt=\"ÅÄÖ\" /&gt;</code></pre>"
 
     file = Gimli::MarkupFile.new File.expand_path('../../fixtures/code_block_with_utf8.textile', __FILE__)
