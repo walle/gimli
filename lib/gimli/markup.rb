@@ -273,6 +273,7 @@ module Gimli
             "<pre><code>#{CGI.escapeHTML(spec[:code])}</code></pre>"
           end
         end
+        body = body.force_encoding('utf-8') if body.respond_to? :force_encoding
         data.gsub!(id, body)
       end
 
