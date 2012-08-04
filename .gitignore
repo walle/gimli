@@ -1,5 +1,4 @@
 pkg/
 doc/
 .yardoc/
-Gemfile.lock
 .DS_Store
