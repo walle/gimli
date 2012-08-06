@@ -252,6 +252,8 @@ module Gimli
         if RUBY_VERSION =~ /1\.8\../
           require 'iconv'
           code = Iconv.conv('ISO-8859-1//IGNORE', 'utf-8', code)
+        else
+          code = code.encode('ISO-8859-1', 'utf-8')
         end
 
         blocks << [spec[:lang], code]
