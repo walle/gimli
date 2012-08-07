@@ -32,6 +32,10 @@ module Gimli extend OptiFlagSet
     description 'Print the page numbers in the lower right corner of all pages in pdf'
     alternate_forms 'p'
   end
+  optional_switch_flag 'tableofcontents' do
+    description 'Insert a table of contents first in the pdf'
+    alternate_forms 't'
+  end
   optional_switch_flag 'removefrontmatter' do
     description 'Remove yaml frontmatter from your files.'
     alternate_forms 'y'
