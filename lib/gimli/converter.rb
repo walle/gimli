@@ -2,13 +2,11 @@
 
 require 'fileutils'
 
-require 'pdfkit'
-
 require 'gimli/markup'
 
 module Gimli
 
-  # The class that communicates with PDFKit
+  # The class that converts the files
   class Converter
 
     # Initialize the converter with a File
@@ -29,6 +27,12 @@ module Gimli
       @output_filename = output_filename
       @output_dir = output_dir
       @stylesheet = stylesheet
+      @stylesheets = []
+
+      @options = {}
+      @options.merge!({ :footer_right => '[page]/[toPage]' }) if @pagenumbers
+      @options.merge!({ :toc => true }) if @tableofcontents
+      @wkhtmltopdf = Wkhtmltopdf.new @options
     end
 
     # Convert the file and save it as a PDF file
@@ -63,35 +67,35 @@ module Gimli
       html
     end
 
-    # Load the pdfkit with html
-    # @param [String] html
-    # @return [PDFKit]
-    def pdf_kit(html)
-      options = {}
-      options.merge!({ :footer_right => '[page]/[toPage]' }) if @pagenumbers
-      options.merge!({ :toc => true }) if @tableofcontents
-      kit = PDFKit.new(html, options)
-
-      load_stylesheets kit
-
-      kit
-    end
-
     # Create the pdf
     # @param [String] html the html input
     # @param [String] filename the name of the output file
     def output_pdf(html, filename)
-      kit = pdf_kit(html)
-      kit.to_file(output_file(filename))
+      load_stylesheets
+      append_stylesheets html
+      @wkhtmltopdf.output_pdf html, output_file(filename)
     end
 
     # Load the stylesheets to pdfkit loads the default and the user selected if any
-    # @param [PDFKit] kit
-    def load_stylesheets(kit)
+    def load_stylesheets
       # Load standard stylesheet
       style = ::File.expand_path("../../../config/style.css", __FILE__)
-      kit.stylesheets << style
-      kit.stylesheets << stylesheet if ::File.exists?(stylesheet)
+      @stylesheets << style
+      @stylesheets << stylesheet if ::File.exists?(stylesheet)
+    end
+
+    def append_stylesheets(html)
+      @stylesheets.each do |stylesheet|
+        if html.match(/<\/head>/)
+          html = html.gsub(/(<\/head>)/, style_tag_for(stylesheet)+'\1')
+        else
+          html.insert(0, style_tag_for(stylesheet))
+        end
+      end
+    end
+
+    def style_tag_for(stylesheet)
+      "<style>#{File.read(stylesheet)}</style>"
     end
 
     # Returns the selected stylesheet. Defaults to ./gimli.css
