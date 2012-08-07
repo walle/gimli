@@ -69,7 +69,7 @@ module Gimli
     def pdf_kit(html)
       options = {}
       options.merge!({ :footer_right => '[page]/[toPage]' }) if @pagenumbers
-      options.merge!({ :toc => '' }) if @tableofcontents
+      options.merge!({ :toc => true }) if @tableofcontents
       kit = PDFKit.new(html, options)
 
       load_stylesheets kit
