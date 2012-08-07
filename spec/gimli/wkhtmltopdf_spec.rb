@@ -9,13 +9,22 @@ describe Gimli::Wkhtmltopdf do
   it 'should assemble correct command' do
     wkhtmltopdf = Gimli::Wkhtmltopdf.new
     mock(wkhtmltopdf).bin { 'wkhtmltopdf' }
-    wkhtmltopdf.command('test.pdf').should == ['"wkhtmltopdf"', '"--quiet"', '"-"', '"test.pdf"']
+    args = wkhtmltopdf.command('test.pdf')
+    args.size.should == 4
+    args.should include '"wkhtmltopdf"'
+    args.should include '"--quiet"'
+    args.should include '"-"'
+    args.should include  '"test.pdf"'
   end
 
   it 'should assemble correct command with options' do
     wkhtmltopdf = Gimli::Wkhtmltopdf.new({:toc => true, :footer_right => '[page]/[toPage]'})
     mock(wkhtmltopdf).bin { 'wkhtmltopdf' }
-    wkhtmltopdf.command('test.pdf').should == ['"wkhtmltopdf"', '"--toc"', '"--footer-right"', '"[page]/[toPage]"', '"--quiet"', '"-"', '"test.pdf"']
+    args = wkhtmltopdf.command('test.pdf')
+    args.size.should == 7
+    args.should include '"--toc"'
+    args.should include '"--footer-right"'
+    args.should include '"[page]/[toPage]"'
   end
 
   it 'should normalize argument' do
