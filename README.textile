@@ -49,6 +49,14 @@ Standard behavior is for gimli to output the files in the current directory. To 
 
 Gimli also plays nice with Jekyll style markup files. You can pass gimli the @-y@ flag to have it remove Jekyll's YAML front matter from the top of your markup files. Allowing you to use gimli & Jekyll together on your Blog/Resume/Catalogue to create nicely formatted versions for online and offline viewing.
 
+To pass parameters directly to wkhtmltopdf, use the @-w@ flag. eg.
+
+bc. $ gimli -f test.md -w '--toc --footer-right "[page]/[toPage]"'
+
+This gives a pdf with a table of contents and page numbers in the footer.
+
+See the "man page":https://github.com/antialize/wkhtmltopdf/blob/master/README_WKHTMLTOPDF#L80 for wkhtmltopdf for all possible parameters.
+
 Run @gimli -h@ for a full list of options available
 
 h2. Syntax highlighting

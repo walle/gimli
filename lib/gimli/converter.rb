@@ -15,18 +15,14 @@ module Gimli
     def initialize(files, config)
       @files = files
       @merge = config.merge
-      @pagenumbers = config.page_numbers
-      @tableofcontents = config.table_of_contents
+      @wkhtmltopdf_parameters = config.wkhtmltopdf_parameters
       @remove_front_matter = config.remove_front_matter
       @output_filename = config.output_filename
       @output_dir = config.output_dir
       @stylesheet = config.stylesheet
       @stylesheets = []
 
-      @options = {}
-      @options.merge!({ :footer_right => '[page]/[toPage]' }) if @pagenumbers
-      @options.merge!({ :toc => true }) if @tableofcontents
-      @wkhtmltopdf = Wkhtmltopdf.new @options
+      @wkhtmltopdf = Wkhtmltopdf.new @wkhtmltopdf_parameters
     end
 
     # Convert the file and save it as a PDF file
