@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'creole', '~> 0.4.2'
   s.add_dependency 'wikicloth', '~> 0.8.0'
 
-  s.add_dependency 'albino', '~> 1.3.3'
+  s.add_dependency 'coderay', '~> 1.0.7'
   s.add_dependency 'nokogiri', '~> 1.5.5'
 
   s.add_dependency 'wkhtmltopdf-binary', '~> 0.9.9.1'

@@ -5,7 +5,6 @@ require 'gimli/config'
 require 'gimli/setup'
 require 'gimli/markupfile'
 require 'gimli/converter'
-require 'gimli/albino'
 require 'gimli/path'
 require 'gimli/wkhtmltopdf'
 
