@@ -13,10 +13,10 @@
 # furnished to do so, subject to the following conditions:
 
 require 'digest/sha1'
-require 'cgi'
 
 require 'github/markup'
 require 'nokogiri'
+require 'coderay'
 
 module Gimli
 
@@ -259,20 +259,12 @@ module Gimli
         blocks << [spec[:lang], code]
       end
 
-      highlighted = begin
-        blocks.size.zero? ? [] : Gimli::Albino.colorize(blocks)
-      rescue ::Albino::ShellArgumentError, ::Albino::TimeoutExceeded,
-               ::Albino::MaximumOutputExceeded
-        []
-      end
-
       @codemap.each do |id, spec|
         body = spec[:output] || begin
-          if (body = highlighted.shift.to_s).size > 0
-            update_cache(:code, id, body)
-            body
+          if spec[:lang]
+            CodeRay.scan(spec[:code], spec[:lang]).html(:line_numbers => :table)
           else
-            "<pre><code>#{CGI.escapeHTML(spec[:code])}</code></pre>"
+            CodeRay.scan(spec[:code], :text).div
           end
         end
         body = body.force_encoding('utf-8') if body.respond_to? :force_encoding

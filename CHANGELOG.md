@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.3.1
+-----
+
+* Use coderay instead of albino and pygments. This fixes issues with
+  pygments not being installed and simplifies testing.
+
 0.3.0
 -----
 
