@@ -10,7 +10,7 @@ describe Gimli::Converter do
     name = 'my_file'
     mock(file).name { name }
 
-    converter = Gimli::Converter.new [file]
+    converter = Gimli::Converter.new [file], Gimli::Config.new
     mock(converter).output_dir { Dir.getwd }
 
     converter.output_file.should == File.join(Dir.getwd, "#{name}.pdf")
@@ -21,7 +21,7 @@ describe Gimli::Converter do
     name = 'my_file'
     mock(file).name { name }
 
-    converter = Gimli::Converter.new [file]
+    converter = Gimli::Converter.new [file], Gimli::Config.new
     mock(converter).output_dir { '/tmp/out' }
 
     converter.output_file(file).should == "/tmp/out/#{name}.pdf"
@@ -31,7 +31,11 @@ describe Gimli::Converter do
     file = Gimli::MarkupFile.new 'fake'
     output_filename = 'my_file'
 
-    converter = Gimli::Converter.new [file], false, false, false, false, output_filename
+    config = Gimli.configure do |c|
+      c.output_filename = output_filename
+    end
+
+    converter = Gimli::Converter.new [file], config
     mock(converter).output_dir { Dir.getwd }
 
     converter.output_file.should == File.join(Dir.getwd, "#{output_filename}.pdf")
@@ -41,7 +45,7 @@ describe Gimli::Converter do
     dir = Dir.getwd
 
     file = Gimli::MarkupFile.new 'fake'
-    converter = Gimli::Converter.new file
+    converter = Gimli::Converter.new file, Gimli::Config.new
 
     converter.output_dir.should == dir
   end
@@ -50,7 +54,12 @@ describe Gimli::Converter do
     dir = '/tmp/out'
 
     file = Gimli::MarkupFile.new 'fake'
-    converter = Gimli::Converter.new file, false, false, false, false, nil, dir
+
+    config = Gimli.configure do |c|
+      c.output_dir = dir
+    end
+
+    converter = Gimli::Converter.new file, config
 
     mock(File).directory?(dir) { true }
 
@@ -59,7 +68,7 @@ describe Gimli::Converter do
 
   it 'should use default stylesheet if none given' do
     file = Gimli::MarkupFile.new 'fake'
-    converter = Gimli::Converter.new file
+    converter = Gimli::Converter.new file, Gimli::Config.new
 
     converter.stylesheet.should == 'gimli.css'
   end
@@ -68,7 +77,11 @@ describe Gimli::Converter do
     file = Gimli::MarkupFile.new 'fake'
     stylesheet = '/home/me/gimli/my-style.css'
 
-    converter = Gimli::Converter.new file, false, false, false, false, nil, nil, stylesheet
+    config = Gimli.configure do |c|
+      c.stylesheet = stylesheet
+    end
+
+    converter = Gimli::Converter.new file, config
 
     converter.stylesheet.should == stylesheet
   end
@@ -77,7 +90,7 @@ describe Gimli::Converter do
     file = Gimli::MarkupFile.new 'fake'
     filename = 'fixtures/fake.textile'
     dir_string = ::File.dirname(::File.expand_path(filename))
-    converter = Gimli::Converter.new file
+    converter = Gimli::Converter.new file, Gimli::Config.new
 
     html = '<p>foo</p><img src="test.jpg" alt="" /><p>bar</p><img src="test2.jpg" alt="" />'
     valid_html = "<p>foo</p><img src=\"#{File.expand_path('test.jpg', dir_string)}\" alt=\"\" /><p>bar</p><img src=\"#{File.expand_path('test2.jpg', dir_string)}\" alt=\"\" />"
@@ -89,7 +102,7 @@ describe Gimli::Converter do
     file = Gimli::MarkupFile.new 'fake'
     filename = '../../fixtures/fake.textile'
     dir_string = ::File.dirname(::File.expand_path(filename))
-    converter = Gimli::Converter.new file
+    converter = Gimli::Converter.new file, Gimli::Config.new
 
     html = '<p>foo</p><img src="https://d3nwyuy0nl342s.cloudfront.net/images/modules/header/logov3-hover.png" alt="" /><p>bar</p>'
 
@@ -100,7 +113,7 @@ describe Gimli::Converter do
     file = Gimli::MarkupFile.new 'fake'
     filename = '../../fixtures/fake.textile'
     dir_string = ::File.dirname(::File.expand_path(filename))
-    converter = Gimli::Converter.new file
+    converter = Gimli::Converter.new file, Gimli::Config.new
 
     html = '<p>foo</p><img src="test.jpg" alt="" /><p>bar</p><img src="/tmp/test2.jpg" alt="" /> <img src="https://d3nwyuy0nl342s.cloudfront.net/images/modules/header/logov3-hover.png" alt="" />'
     valid_html = "<p>foo</p><img src=\"#{File.expand_path('test.jpg', dir_string)}\" alt=\"\" /><p>bar</p><img src=\"/tmp/test2.jpg\" alt=\"\" /> <img src=\"https://d3nwyuy0nl342s.cloudfront.net/images/modules/header/logov3-hover.png\" alt=\"\" />"

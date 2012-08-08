@@ -20,6 +20,10 @@ module Gimli extend OptiFlagSet
     description 'Sets the name of the output file. Only used with single file and in merge mode'
     alternate_forms 'n'
   end
+  optional_flag 'wkhtmltopdfparameters' do
+    description 'Parameters to be passed on to wkhtmltopdf. Use "" if more than one parameter. See wkhtmltopdf usage for possible parameters.'
+    alternate_forms 'w'
+  end
   optional_switch_flag 'recursive' do
     description 'Recurse current or target directory and convert all valid markup files'
     alternate_forms 'r'
@@ -27,14 +31,6 @@ module Gimli extend OptiFlagSet
   optional_switch_flag 'merge' do
     description 'Merge markup files into single pdf file'
     alternate_forms 'm'
-  end
-  optional_switch_flag 'pagenumbers' do
-    description 'Print the page numbers in the lower right corner of all pages in pdf'
-    alternate_forms 'p'
-  end
-  optional_switch_flag 'tableofcontents' do
-    description 'Insert a table of contents first in the pdf'
-    alternate_forms 't'
   end
   optional_switch_flag 'removefrontmatter' do
     description 'Remove yaml frontmatter from your files.'
