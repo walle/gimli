@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.3.0
+-----
+
+* Remove flags for table of contents and page numbering. Add flag for wkhtmltopdf parameters instead to give more flexibility.
+
+**This version changes the way you use gimli if you are using the -t or
+-p flags. Use the -w flag instead to send the parameters directly to
+wkhtmltopdf.**
+
 0.2.3
 -----
 
