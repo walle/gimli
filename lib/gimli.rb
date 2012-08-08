@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'gimli/version'
+require 'gimli/config'
 require 'gimli/setup'
 require 'gimli/markupfile'
 require 'gimli/converter'
@@ -10,11 +11,22 @@ require 'gimli/wkhtmltopdf'
 
 module Gimli
 
+  # Create a config object
+  # @example Example usage
+  #   config = Gimli.configure |config| do
+  #     config.file = './test.md'
+  #     config.output_dir = '/tmp'
+  #     config.table_of_contents = true
+  #   end
+  def self.configure
+    config = Config.new
+    yield config
+    config
+  end
+
   # Starts the processing of selected files
-  def self.process!(file, recursive = false, merge = false, pagenumbers = false, tableofcontents = false, remove_front_matter = false, output_filename = nil, output_dir = nil, stylesheet = nil)
-
-
-    @files = Path.list_valid(file, recursive).map { |file| MarkupFile.new(file) }
-    Converter.new(@files, merge, pagenumbers, tableofcontents, remove_front_matter, output_filename, output_dir, stylesheet).convert!
+  def self.process!(config)
+    @files = Path.list_valid(config.file, config.recursive).map { |file| MarkupFile.new(file) }
+    Converter.new(@files, config).convert!
   end
 end

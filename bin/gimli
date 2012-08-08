@@ -9,5 +9,17 @@ if ARGV.flags.version?
   exit
 end
 
-Gimli.process! ARGV.flags.file, ARGV.flags.recursive?, ARGV.flags.merge?, ARGV.flags.pagenumbers?, ARGV.flags.tableofcontents?, ARGV.flags.removefrontmatter, ARGV.flags.outputfilename, ARGV.flags.outputdir, ARGV.flags.stylesheet
+config = Gimli.configure do |config|
+  config.file = ARGV.flags.file
+  config.recursive = ARGV.flags.recursive?
+  config.merge = ARGV.flags.merge?
+  config.page_numbers = ARGV.flags.pagenumbers?
+  config.table_of_contents = ARGV.flags.tableofcontents?
+  config.remove_front_matter = ARGV.flags.removefrontmatter
+  config.output_filename = ARGV.flags.outputfilename
+  config.output_dir = ARGV.flags.outputdir
+  config.stylesheet = ARGV.flags.stylesheet
+end
+
+Gimli.process! config
 

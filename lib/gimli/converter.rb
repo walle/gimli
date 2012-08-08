@@ -11,22 +11,16 @@ module Gimli
 
     # Initialize the converter with a File
     # @param [Array] files The list of Gimli::MarkupFile to convert (passing a single file will still work)
-    # @param [Boolean] merge
-    # @param [Boolean] pagenumbers
-    # @param [Boolean] tableofcontents
-    # @param [Boolean] remove_front_matter
-    # @param [String] output_filename
-    # @param [String] output_dir
-    # @param [String] stylesheet
-    def initialize(files, merge = false, pagenumbers = false, tableofcontents = false, remove_front_matter = false, output_filename = nil, output_dir = nil, stylesheet = nil)
+    # @param [Gimli::Config] config
+    def initialize(files, config)
       @files = files
-      @merge = merge
-      @pagenumbers = pagenumbers
-      @tableofcontents = tableofcontents
-      @remove_front_matter = remove_front_matter
-      @output_filename = output_filename
-      @output_dir = output_dir
-      @stylesheet = stylesheet
+      @merge = config.merge
+      @pagenumbers = config.page_numbers
+      @tableofcontents = config.table_of_contents
+      @remove_front_matter = config.remove_front_matter
+      @output_filename = config.output_filename
+      @output_dir = config.output_dir
+      @stylesheet = config.stylesheet
       @stylesheets = []
 
       @options = {}
