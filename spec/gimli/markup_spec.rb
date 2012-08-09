@@ -10,10 +10,9 @@ describe Gimli::Markup do
     output = "<p>This should be at the top of the file</p>"
 
     file = Gimli::MarkupFile.new File.expand_path('../../fixtures/yaml_front_matter.textile', __FILE__)
-    markup = Gimli::Markup.new file, true
+    markup = Gimli::Markup::Markup.new file, true
 
     markup.render.should == output
   end
-
 end
 
