@@ -35,7 +35,5 @@ module Gimli
     def bin
       @bin ||= "\"#{(`which wkhtmltopdf`).chomp}\""
     end
-
   end
-
 end

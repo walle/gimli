@@ -14,7 +14,5 @@ module Gimli
       @table_of_contents = false
       @remove_front_matter = false
     end
-
   end
-
 end
