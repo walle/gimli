@@ -16,9 +16,10 @@ require 'digest/sha1'
 
 require 'github/markup'
 require 'nokogiri'
-require 'coderay'
 
 require 'gimli/markup/yaml_frontmatter_remover'
+require 'gimli/markup/code'
+require 'gimli/markup/code_block'
 
 module Gimli
 
@@ -48,8 +49,10 @@ module Gimli
       # @return [String] The formatted data
       def render
         data = @data.dup
-        data = YamlFrontmatterRemover.new(data).process if @do_remove_yaml_front_matter
-        data = extract_code(data)
+        @code = Code.new
+        @yaml_frontmatter_remover = YamlFrontmatterRemover.new
+        data = @yaml_frontmatter_remover.process(data) if @do_remove_yaml_front_matter
+        data = @code.extract(data)
         data = extract_tags(data)
         begin
           data = data.force_encoding('utf-8') if data.respond_to? :force_encoding
@@ -61,7 +64,7 @@ module Gimli
           data = %{<p class="gimli-error">#{e.message}</p>}
         end
         data = process_tags(data)
-        data = process_code(data)
+        data = @code.process(data)
 
         doc  = Nokogiri::HTML::DocumentFragment.parse(data, 'UTF-8')
         yield doc if block_given?
@@ -210,80 +213,6 @@ module Gimli
           memo[parts[0]] = (parts.size == 1 ? true : parts[1])
           memo
         end
-      end
-
-      # Extract all code blocks into the codemap and replace with placeholders.
-      #
-      # @param [String] data The raw String data.
-      # @return [String] Returns the placeholder'd String data.
-      def extract_code(data)
-        data.gsub!(/^``` ?([^\r\n]+)?\r?\n(.+?)\r?\n```\r?$/m) do
-          id     = Digest::SHA1.hexdigest($2)
-          cached = check_cache(:code, id)
-          @codemap[id] = cached   ?
-            { :output => cached } :
-            { :lang => $1, :code => $2 }
-          id
-        end
-        data
-      end
-
-      # Process all code from the codemap and replace the placeholders with the
-      # final HTML.
-      #
-      # @param [String] data The String data (with placeholders).
-      # @return [String] Returns the marked up String data.
-      def process_code(data)
-        return data if data.nil? || data.size.zero? || @codemap.size.zero?
-        blocks    = []
-        @codemap.each do |id, spec|
-          next if spec[:output] # cached
-
-          code = spec[:code]
-          if code.lines.all? { |line| line =~ /\A\r?\n\Z/ || line =~ /^(  |\t)/ }
-            code.gsub!(/^(  |\t)/m, '')
-          end
-
-          if RUBY_VERSION =~ /1\.8\../
-            require 'iconv'
-            code = Iconv.conv('ISO-8859-1//IGNORE', 'utf-8', code)
-          else
-            code = code.encode('ISO-8859-1', 'utf-8')
-          end
-
-          blocks << [spec[:lang], code]
-        end
-
-        @codemap.each do |id, spec|
-          body = spec[:output] || begin
-            if spec[:lang]
-              CodeRay.scan(spec[:code], spec[:lang]).html(:line_numbers => :table)
-            else
-              CodeRay.scan(spec[:code], :text).div
-            end
-          end
-          body = body.force_encoding('utf-8') if body.respond_to? :force_encoding
-          data.gsub!(id, body)
-        end
-
-        data
-      end
-
-      # Hook for getting the formatted value of extracted tag data.
-      #
-      # @param [Symbol] type Symbol value identifying what type of data is being extracted.
-      # @param [String] id String SHA1 hash of original extracted tag data.
-      # @return [String] Returns the String cached formatted data, or nil.
-      def check_cache(type, id)
-      end
-
-      # Hook for caching the formatted value of extracted tag data.
-      #
-      # @param [Symbol] type Symbol value identifying what type of data is being extracted.
-      # @param [String] id String SHA1 hash of original extracted tag data.
-      # @param [String] data The String formatted value to be cached.
-      # @return [nil]
-      def update_cache(type, id, data)
       end
     end
   end
