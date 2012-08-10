@@ -37,10 +37,6 @@ module Gimli
         @filename = file.filename
         @name = file.name
         @data = file.data
-        @format = file.format
-        @tagmap = {}
-        @codemap = {}
-        @premap = {}
         @do_remove_yaml_front_matter = do_remove_yaml_front_matter
       end
 
