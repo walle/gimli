@@ -15,5 +15,13 @@ describe Gimli::Markup do
     markup.render.should == output
   end
 
+  it "should handle textile-converted quotes properly" do
+    output = %q(<p>&ldquo;Double&rdquo; and &lsquo;single&rsquo; quotes are handled properly.</p>)
+
+    file = Gimli::MarkupFile.new File.expand_path('../../fixtures/quotes.textile', __FILE__)
+    markup = Gimli::Markup.new file, true
+
+    markup.render.should == output
+  end
 end
 

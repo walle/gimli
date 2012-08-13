@@ -59,7 +59,7 @@ module Gimli
       data = process_tags(data)
       data = process_code(data)
 
-      doc  = Nokogiri::HTML::DocumentFragment.parse(data, 'UTF-8')
+      doc  = Nokogiri.HTML(data.encode('ASCII-8BIT'))
       yield doc if block_given?
       data = doc_to_html(doc)
 
@@ -68,7 +68,7 @@ module Gimli
     end
 
     def doc_to_html(doc)
-      doc.to_xhtml(:save_with => Nokogiri::XML::Node::SaveOptions::AS_XHTML, :encoding => 'UTF-8')
+      doc.css('body').inner_html()
     end
 
     # Removes YAML Front Matter
