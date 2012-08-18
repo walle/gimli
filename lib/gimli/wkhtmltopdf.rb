@@ -33,7 +33,7 @@ module Gimli
     # Find the wkhtmltopdf binary
     # @return [String] the path to the binary
     def bin
-      @bin ||= "\"#{(`which wkhtmltopdf`).chomp}\""
+      @bin ||= "\"#{(system 'which wkhtmltopdf').chomp}\""
     end
   end
 end
