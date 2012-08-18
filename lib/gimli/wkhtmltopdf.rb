@@ -16,7 +16,7 @@ module Gimli
       args = command(filename)
       invoke = args.join(' ')
 
-      result = IO.popen(invoke, "wb+") do |pdf|
+      IO.popen(invoke, "wb+") do |pdf|
         pdf.puts(html)
         pdf.close_write
         pdf.gets(nil)
@@ -35,7 +35,5 @@ module Gimli
     def bin
       @bin ||= "\"#{(`which wkhtmltopdf`).chomp}\""
     end
-
   end
-
 end

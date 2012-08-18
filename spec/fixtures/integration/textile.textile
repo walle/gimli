@@ -1,0 +1,47 @@
+h1. Test file
+
+* A
+* Simple
+* List
+
+***
+
+# A
+# Numbered
+# List
+
+h2. Tests
+
+h3. Link
+
+* http://google.com
+* "an example":http://example.com/
+* Google[1]
+
+h3. Image
+
+!https://www.google.se/images/srpr/logo3w.png!
+
+h3. Blockquote
+
+bq. This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+    consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+    Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+
+bq. Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+    id sem consectetuer libero luctus adipiscing.
+
+h3. Code
+
+```ruby
+  puts 'Hello world!'
+  (1..10).each do |number|
+    p number
+  end
+```
+
+## Subheading
+
+*Lorem* ipsum -dolor- sit ~amet~, _consectetur_ adipiscing elit. Phasellus aliquet hendrerit velit eu bibendum. Phasellus et metus at velit vulputate posuere ac a turpis. Vivamus lobortis lectus at augue pretium vel dictum enim mollis. Fusce quis urna eget urna porta vulputate. Mauris eget sapien quis orci auctor adipiscing ac vitae magna. Nulla mauris quam, convallis porta tincidunt quis, imperdiet vitae magna. Maecenas orci odio, ullamcorper et ullamcorper nec, commodo ut lacus. Morbi tortor nulla, facilisis id laoreet non, imperdiet scelerisque sapien. Cras posuere arcu mauris. Nullam ac arcu tellus, a pharetra tellus. Nulla ac odio felis, nec porttitor nisi. Mauris fringilla adipiscing urna, vel ullamcorper felis congue et. Sed sollicitudin tempor odio, vel dignissim diam facilisis et. Nam rhoncus lacinia commodo.
+
+http://google.com/[1]

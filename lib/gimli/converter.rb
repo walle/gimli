@@ -29,7 +29,7 @@ module Gimli
     def convert!
       merged_contents = []
       @files.each do |file|
-        markup = Markup.new file, @remove_front_matter
+        markup = Markup::Renderer.new file, @remove_front_matter
         html = convert_image_urls markup.render, file.filename
         if @merge
           html = "<div class=\"page-break\"></div>#{html}" unless merged_contents.empty?

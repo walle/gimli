@@ -5,7 +5,7 @@ require "gimli/version"
 
 Gem::Specification.new do |s|
   s.name = "gimli"
-  s.version = Gimli::Version
+  s.version = Gimli::VERSION
   s.authors = "Fredrik Wallgren"
   s.email = "fredrik.wallgren@gmail.com"
   s.homepage = "https://github.com/walle/gimli"
