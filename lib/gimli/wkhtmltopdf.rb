@@ -16,7 +16,7 @@ module Gimli
       args = command(filename)
       invoke = args.join(' ')
 
-      result = IO.popen(invoke, "wb+") do |pdf|
+      IO.popen(invoke, "wb+") do |pdf|
         pdf.puts(html)
         pdf.close_write
         pdf.gets(nil)
@@ -33,7 +33,7 @@ module Gimli
     # Find the wkhtmltopdf binary
     # @return [String] the path to the binary
     def bin
-      @bin ||= "\"#{(system 'which wkhtmltopdf').chomp}\""
+      @bin ||= "\"#{(`which wkhtmltopdf`).chomp}\""
     end
   end
 end

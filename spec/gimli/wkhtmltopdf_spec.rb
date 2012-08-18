@@ -21,14 +21,14 @@ describe Gimli::Wkhtmltopdf do
   end
 
   it 'should use which to find wkhtmltopdf first time' do
-    mock(@wkhtmltopdf).system("which wkhtmltopdf") { '~/wkhtmltopdf' }
+    mock(@wkhtmltopdf).__double_definition_create__.call(:`, "which wkhtmltopdf") { '~/wkhtmltopdf' }
     @wkhtmltopdf.bin.should eq '"~/wkhtmltopdf"'
     @wkhtmltopdf.bin.should eq '"~/wkhtmltopdf"' # Should be cached
   end
 
   it 'should generate a pdf' do
+    mock(@wkhtmltopdf).__double_definition_create__.call(:`, "which wkhtmltopdf") { '~/wkhtmltopdf' }
     mock(IO).popen("\"~/wkhtmltopdf\" --quiet - \"\"", "wb+") { true }
-    mock(@wkhtmltopdf).system("which wkhtmltopdf") { '~/wkhtmltopdf' }
     @wkhtmltopdf.output_pdf('', '')
   end
 end
