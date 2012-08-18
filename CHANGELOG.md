@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.3.2
+-----
+
+* Code refactorings
+* Removed support for gollum's "tags" eg. [[File]]. Use markup to create links
+
 0.3.1
 -----
 
