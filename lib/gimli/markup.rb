@@ -20,7 +20,6 @@ require 'nokogiri'
 require 'gimli/markup/yaml_frontmatter_remover'
 require 'gimli/markup/code'
 require 'gimli/markup/code_block'
-require 'gimli/markup/tags'
 require 'gimli/markup/renderer'
 
 module Gimli

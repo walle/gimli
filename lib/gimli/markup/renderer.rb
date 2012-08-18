@@ -25,11 +25,9 @@ module Gimli
       def render
         data = @data.dup
         @code = Code.new
-        @tags = Tags.new
         @yaml_frontmatter_remover = YamlFrontmatterRemover.new
         data = @yaml_frontmatter_remover.process(data) if @do_remove_yaml_front_matter
         data = @code.extract(data)
-        data = @tags.extract(data)
         begin
           data = data.force_encoding('utf-8') if data.respond_to? :force_encoding
           data = GitHub::Markup.render(@filename, data)
@@ -39,7 +37,6 @@ module Gimli
         rescue Object => e
           data = %{<p class="gimli-error">#{e.message}</p>}
         end
-        data = @tags.process(data)
         data = @code.process(data)
 
         doc  = Nokogiri::HTML::DocumentFragment.parse(data, 'UTF-8')
