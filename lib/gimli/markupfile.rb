@@ -28,7 +28,7 @@ module Gimli
     # @param [String] format
     # @return [Symbol|nil]
     def load_format(format)
-      case format
+      case format.to_s
         when /(md|mkdn?|mdown|markdown)$/i
           :markdown
         when /(textile)$/i
