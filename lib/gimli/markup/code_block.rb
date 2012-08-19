@@ -14,6 +14,8 @@ module Gimli
         @id, @language, @code = id, language, code
       end
 
+      # Returns the code with syntax highlightning
+      # @return [String]
       def highlighted
         if @language
           CodeRay.scan(@code, @language).html(:line_numbers => :table)

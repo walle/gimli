@@ -47,6 +47,9 @@ module Gimli
         data
       end
 
+      # Converts a nokogiri document fragment to html
+      # @param [Nokogiri::HTML::DocumentFragment] doc
+      # @return [String]
       def doc_to_html(doc)
         doc.to_xhtml(:save_with => Nokogiri::XML::Node::SaveOptions::AS_XHTML, :encoding => 'UTF-8')
       end
