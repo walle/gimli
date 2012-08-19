@@ -20,9 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'github-markup', '~> 0.7.4'
   s.add_dependency 'redcarpet', '~> 2.1.1'
   s.add_dependency 'RedCloth', '~> 4.2.7'
-  s.add_dependency 'org-ruby', '~> 0.7.1'
-  s.add_dependency 'creole', '~> 0.4.2'
-  s.add_dependency 'wikicloth', '~> 0.8.0'
 
   s.add_dependency 'coderay', '~> 1.0.7'
   s.add_dependency 'nokogiri', '~> 1.5.5'
