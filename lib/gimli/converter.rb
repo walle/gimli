@@ -13,15 +13,9 @@ module Gimli
     # @param [Array] files The list of Gimli::MarkupFile to convert (passing a single file will still work)
     # @param [Gimli::Config] config
     def initialize(files, config)
-      @files = files
-      @merge = config.merge
-      @wkhtmltopdf_parameters = config.wkhtmltopdf_parameters
-      @remove_front_matter = config.remove_front_matter
-      @output_filename = config.output_filename
-      @output_dir = config.output_dir
-      @stylesheet = config.stylesheet
-      @stylesheets = []
+      @files, @config = files, config
 
+      @stylesheets = []
       @wkhtmltopdf = Wkhtmltopdf.new @wkhtmltopdf_parameters
     end
 
@@ -29,9 +23,9 @@ module Gimli
     def convert!
       merged_contents = []
       @files.each do |file|
-        markup = Markup::Renderer.new file, @remove_front_matter
+        markup = Markup::Renderer.new file, @config.remove_front_matter
         html = convert_image_urls markup.render, file.filename
-        if @merge
+        if @config.merge
           html = "<div class=\"page-break\"></div>#{html}" unless merged_contents.empty?
           merged_contents << html
         else
@@ -76,11 +70,7 @@ module Gimli
 
     def append_stylesheets(html)
       @stylesheets.each do |stylesheet|
-        if html.match(/<\/head>/)
-          html = html.gsub(/(<\/head>)/, style_tag_for(stylesheet)+'\1')
-        else
-          html.insert(0, style_tag_for(stylesheet))
-        end
+        html.insert(0, style_tag_for(stylesheet))
       end
     end
 
@@ -91,13 +81,13 @@ module Gimli
     # Returns the selected stylesheet. Defaults to ./gimli.css
     # @return [String]
     def stylesheet
-      @stylesheet.nil? ? 'gimli.css' : @stylesheet
+      @config.stylesheet.nil? ? 'gimli.css' : @config.stylesheet
     end
 
     # Returns the directory where to save the output. Defaults to ./
     # @return [String]
     def output_dir
-      output_dir = @output_dir.nil? ? Dir.getwd : @output_dir
+      output_dir = @config.output_dir.nil? ? Dir.getwd : @config.output_dir
       FileUtils.mkdir_p(output_dir) unless ::File.directory?(output_dir)
       output_dir
     end
@@ -108,13 +98,13 @@ module Gimli
     def output_file(file = nil)
       if file
         output_filename = file.name
-        if !@output_filename.nil? && @files.length == 1
-          output_filename = @output_filename
+        if !@config.output_filename.nil? && @files.length == 1
+          output_filename = @config.output_filename
         end
       else
         output_filename = Time.now.to_s.split(' ').join('_')
-        output_filename = @files.last.name if @files.length == 1 || @merge
-        output_filename = @output_filename unless @output_filename.nil?
+        output_filename = @files.last.name if @files.length == 1 || @config.merge
+        output_filename = @config.output_filename unless @config.output_filename.nil?
       end
 
       ::File.join(output_dir, "#{output_filename}.pdf")

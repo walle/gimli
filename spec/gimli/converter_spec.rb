@@ -38,7 +38,7 @@ describe Gimli::Converter do
     converter = Gimli::Converter.new [file], config
     mock(converter).output_dir { Dir.getwd }
 
-    converter.output_file.should == File.join(Dir.getwd, "#{output_filename}.pdf")
+    converter.output_file(file).should == File.join(Dir.getwd, "#{output_filename}.pdf")
   end
 
   it 'should give the correct output_dir when none given' do
