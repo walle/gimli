@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.4.0
+-----
+
+* Remove some markup gems as dependencies. Install them outside of gimli to use them. Like all other more "unkommon" markup languages.
+
 0.3.2
 -----
 
