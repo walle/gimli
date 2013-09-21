@@ -8,6 +8,8 @@ require 'gimli/converter'
 require 'gimli/path'
 require 'gimli/wkhtmltopdf'
 
+require File.expand_path(File.dirname(__FILE__)) + '/../ext/github_markup.rb'
+
 module Gimli
 
   # Create a config object
