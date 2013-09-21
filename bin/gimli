@@ -13,6 +13,7 @@ config = Gimli.configure do |config|
   config.file = ARGV.flags.file
   config.recursive = ARGV.flags.recursive?
   config.merge = ARGV.flags.merge?
+  config.debug = ARGV.flags.debug?
   config.wkhtmltopdf_parameters = ARGV.flags.wkhtmltopdfparameters
   config.remove_front_matter = ARGV.flags.removefrontmatter
   config.output_filename = ARGV.flags.outputfilename
