@@ -16,7 +16,7 @@ module Gimli
       @files, @config = files, config
 
       @stylesheets = []
-      @wkhtmltopdf = Wkhtmltopdf.new @wkhtmltopdf_parameters
+      @wkhtmltopdf = Wkhtmltopdf.new @config.wkhtmltopdf_parameters
     end
 
     # Convert the file and save it as a PDF file
