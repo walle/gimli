@@ -141,3 +141,10 @@ ol.CodeRay li { white-space: pre }
 .CodeRay .delete .delete { color: #800; font-weight:bold }
 .CodeRay .change .change { color: #66f; }
 .CodeRay .head .head { color: #f4f; }
+
+.code pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+}
