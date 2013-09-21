@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0
+
+* Support for autolinks and tables using PHP-Markdown style. This version monley patches github/markup to use redcarpet directly in order to be able to pass in extensions.
+
 ## 0.4.2
 
 * Fix bug with wkhtmltopdf arguments not being passed to said command #38 (@apognu)
