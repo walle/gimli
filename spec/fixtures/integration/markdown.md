@@ -46,3 +46,15 @@
 **Lorem** ipsum __dolor__ sit *amet*, _consectetur_ adipiscing elit. Phasellus aliquet hendrerit velit eu bibendum. Phasellus et metus at velit vulputate posuere ac a turpis. Vivamus lobortis lectus at augue pretium vel dictum enim mollis. Fusce quis urna eget urna porta vulputate. Mauris eget sapien quis orci auctor adipiscing ac vitae magna. Nulla mauris quam, convallis porta tincidunt quis, imperdiet vitae magna. Maecenas orci odio, ullamcorper et ullamcorper nec, commodo ut lacus. Morbi tortor nulla, facilisis id laoreet non, imperdiet scelerisque sapien. Cras posuere arcu mauris. Nullam ac arcu tellus, a pharetra tellus. Nulla ac odio felis, nec porttitor nisi. Mauris fringilla adipiscing urna, vel ullamcorper felis congue et. Sed sollicitudin tempor odio, vel dignissim diam facilisis et. Nam rhoncus lacinia commodo.
 
 [Google]: http://google.com/
+
+## Autolink
+
+https://github.com
+
+## Table
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
