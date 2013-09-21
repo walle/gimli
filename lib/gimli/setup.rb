@@ -32,6 +32,10 @@ module Gimli extend OptiFlagSet
     description 'Merge markup files into single pdf file'
     alternate_forms 'm'
   end
+  optional_switch_flag 'debug' do
+    description 'Debugs html output to stdout'
+    alternate_forms 'd'
+  end
   optional_switch_flag 'removefrontmatter' do
     description 'Remove yaml frontmatter from your files.'
     alternate_forms 'y'

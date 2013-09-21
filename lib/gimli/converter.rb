@@ -31,6 +31,7 @@ module Gimli
         else
           output_pdf(html, file)
         end
+        puts html if @config.debug
       end
 
       unless merged_contents.empty?
