@@ -3,6 +3,7 @@
 ## 0.4.2
 
 * Fix bug with wkhtmltopdf arguments not being passed to said command #38 (@apognu)
+* Adds debug flag to output generated html to stdout
 
 ## 0.4.1
 
