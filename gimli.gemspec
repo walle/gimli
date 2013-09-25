@@ -34,6 +34,6 @@ Gem::Specification.new do |s|
 
   s.files = Dir.glob("{bin,ext,lib,spec,config}/**/*") + ['LICENSE', 'README.textile']
   s.executables = ['gimli']
-  s.require_path = ['lib']
+  s.require_paths = ['lib']
 end
 
