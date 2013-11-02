@@ -19,6 +19,7 @@ config = Gimli.configure do |config|
   config.output_filename = ARGV.flags.outputfilename
   config.output_dir = ARGV.flags.outputdir
   config.stylesheet = ARGV.flags.stylesheet
+  config.cover = ARGV.flags.cover
 end
 
 Gimli.process! config
