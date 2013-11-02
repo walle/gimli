@@ -44,6 +44,10 @@ module Gimli extend OptiFlagSet
     description 'Show version information and quit'
     alternate_forms 'v'
   end
+  optional_flag 'cover' do
+    description 'Create cover with the first headline'
+    alternate_forms 'c'
+  end
   usage_flag 'h', 'help', '?'
 
   and_process!

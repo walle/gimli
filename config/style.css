@@ -172,3 +172,8 @@ table tr {
 table tr:nth-child(2n) {
   background-color: #f8f8f8;
 }
+
+.cover {
+  text-align: center;
+  margin-top: 100px;
+}
