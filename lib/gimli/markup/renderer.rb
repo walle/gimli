@@ -37,6 +37,7 @@ module Gimli
       # Prepare data for rendering
       def prepare_data
         @data = @yaml_frontmatter_remover.process(@data) if @do_remove_yaml_front_matter
+        @data = @data.force_encoding('utf-8') if @data.respond_to? :force_encoding
         @data = @code.extract(@data)
       end
 
