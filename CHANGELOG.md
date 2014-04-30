@@ -1,8 +1,9 @@
 # Changelog
 
-## 0.5.4 - pre
+## 0.5.4
 
 * Use the -q parameter instead of --quiet. https://github.com/walle/gimli/pull/52 Thanks @nelsonsar
+* Bugfix with UTF-8 characters. Thanks @toshi-kawanishi
 
 ## 0.5.3
 
