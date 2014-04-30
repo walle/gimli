@@ -1,3 +1,5 @@
+require 'redcarpet'
+
 # Monkey patch github markup to use redcarpet with support for autolinks and tables
 module GitHub::Markup
   alias_method :old_render, :render
