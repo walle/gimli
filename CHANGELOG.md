@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.3
+
+* Merge fixes for gemfile and gitignore. Thanks @docwhat
+
 ## 0.5.0
 
 * Support for autolinks and tables using PHP-Markdown style. This version monley patches github/markup to use redcarpet directly in order to be able to pass in extensions.
