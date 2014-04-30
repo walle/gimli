@@ -2,5 +2,7 @@ pkg/
 doc/
 coverage/
 .yardoc/
+/.bundle/
+/tags
 Gemfile.lock
 .DS_Store
