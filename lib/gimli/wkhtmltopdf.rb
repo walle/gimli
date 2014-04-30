@@ -27,7 +27,7 @@ module Gimli
     # @param [String] filename the outputed pdf's filename
     # @return [Array] a list of strings that make out the call to wkhtmltopdf
     def command(filename)
-      [bin, @parameters, '--quiet', '-', "\"#{filename}\""].compact
+      [bin, @parameters, '-q', '-', "\"#{filename}\""].compact
     end
 
     # Find the wkhtmltopdf binary
