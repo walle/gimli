@@ -15,7 +15,7 @@ describe Gimli::Wkhtmltopdf do
     args = @wkhtmltopdf.command('test.pdf')
     args.size.should eq 4
     args.should include '"wkhtmltopdf"'
-    args.should include '--quiet'
+    args.should include '-q'
     args.should include '-'
     args.should include  '"test.pdf"'
   end
@@ -28,7 +28,7 @@ describe Gimli::Wkhtmltopdf do
 
   it 'should generate a pdf' do
     mock(@wkhtmltopdf).__double_definition_create__.call(:`, "which wkhtmltopdf") { '~/wkhtmltopdf' }
-    mock(IO).popen("\"~/wkhtmltopdf\" --quiet - \"\"", "wb+") { true }
+    mock(IO).popen("\"~/wkhtmltopdf\" -q - \"\"", "wb+") { true }
     @wkhtmltopdf.output_pdf('', '')
   end
 end
