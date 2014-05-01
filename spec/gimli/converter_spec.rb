@@ -134,6 +134,7 @@ describe Gimli::Converter do
     FileUtils.rm_f(Gimli::Converter::COVER_FILE_PATH)
     converter.generate_cover!
     File.exists?(Gimli::Converter::COVER_FILE_PATH).should == true
+    FileUtils.rm_f(Gimli::Converter::COVER_FILE_PATH)
   end
 end
 

@@ -46,7 +46,7 @@ module Gimli extend OptiFlagSet
   end
   optional_flag 'cover' do
     description 'Create cover with the first headline'
-    alternate_forms 'c'
+    alternate_forms 'C'
   end
   usage_flag 'h', 'help', '?'
 
