@@ -56,14 +56,14 @@ module Gimli
     # @param [String] html the html input
     # @param [String] filename the name of the output file
     def output_pdf(html, filename)
+      html = add_head html
       load_stylesheets
       append_stylesheets html
-      add_head html
       @wkhtmltopdf.output_pdf html, output_file(filename)
     end
 
     def add_head(html)
-        html.insert(0, "\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n</head>\n")
+        html = "<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n</head><body>\n#{html}</body></html>"
     end
 
     # Load the stylesheets to pdfkit loads the default and the user selected if any
@@ -76,7 +76,7 @@ module Gimli
 
     def append_stylesheets(html)
       @stylesheets.each do |stylesheet|
-        html.insert(0, style_tag_for(stylesheet))
+        html.gsub!(/<\/head>/, style_tag_for(stylesheet) + '</head>')
       end
     end
 
