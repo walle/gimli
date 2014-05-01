@@ -120,5 +120,21 @@ describe Gimli::Converter do
 
     converter.convert_image_urls(html, filename).should == valid_html
   end
+
+  it 'should create a cover file if given cover option' do
+    file = Gimli::MarkupFile.new 'fake'
+    config = Gimli.configure do |config|
+      config.cover = 'fake'
+    end
+    converter = Gimli::Converter.new file, config
+    any_instance_of(Gimli::Markup::Renderer) do |renderer|
+      stub(renderer).render { 'fake' }
+    end
+
+    FileUtils.rm_f(Gimli::Converter::COVER_FILE_PATH)
+    converter.generate_cover!
+    File.exists?(Gimli::Converter::COVER_FILE_PATH).should == true
+    FileUtils.rm_f(Gimli::Converter::COVER_FILE_PATH)
+  end
 end
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.5
+
+* Add --cover option for creating cover with markdown file https://github.com/walle/gimli/pull/48 Thanks @k0kubun
+
 ## 0.5.4
 
 * Use the -q parameter instead of --quiet. https://github.com/walle/gimli/pull/52 Thanks @nelsonsar

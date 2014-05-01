@@ -9,6 +9,8 @@ module Gimli
   # The class that converts the files
   class Converter
 
+    COVER_FILE_PATH = ::File.expand_path("../../../config/cover.html", __FILE__)
+
     # Initialize the converter with a File
     # @param [Array] files The list of Gimli::MarkupFile to convert (passing a single file will still work)
     # @param [Gimli::Config] config
@@ -16,7 +18,9 @@ module Gimli
       @files, @config = files, config
 
       @stylesheets = []
-      @wkhtmltopdf = Wkhtmltopdf.new @config.wkhtmltopdf_parameters
+      parameters = [@config.wkhtmltopdf_parameters]
+      parameters << '--cover' << COVER_FILE_PATH if config.cover
+      @wkhtmltopdf = Wkhtmltopdf.new parameters.join(' ')
     end
 
     # Convert the file and save it as a PDF file
@@ -56,14 +60,15 @@ module Gimli
     # @param [String] html the html input
     # @param [String] filename the name of the output file
     def output_pdf(html, filename)
+      html = add_head html
       load_stylesheets
+      generate_cover!
       append_stylesheets html
-      add_head html
       @wkhtmltopdf.output_pdf html, output_file(filename)
     end
 
     def add_head(html)
-        html.insert(0, "\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n</head>\n")
+      html = "<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n</head><body>\n#{html}</body></html>"
     end
 
     # Load the stylesheets to pdfkit loads the default and the user selected if any
@@ -76,7 +81,7 @@ module Gimli
 
     def append_stylesheets(html)
       @stylesheets.each do |stylesheet|
-        html.insert(0, style_tag_for(stylesheet))
+        html.gsub!(/<\/head>/, style_tag_for(stylesheet) + '</head>')
       end
     end
 
@@ -114,6 +119,19 @@ module Gimli
       end
 
       ::File.join(output_dir, "#{output_filename}.pdf")
+    end
+
+    # Generate cover file if optional cover was given
+    def generate_cover!
+      return unless @config.cover
+      cover_file = MarkupFile.new @config.cover
+      markup = Markup::Renderer.new cover_file
+      html = "<div class=\"cover\">\n#{markup.render}\n</div>"
+      append_stylesheets(html)
+      html = add_head(html)
+      File.open(COVER_FILE_PATH, 'w') do |f|
+        f.write html
+      end
     end
   end
 end
