@@ -55,7 +55,7 @@ bc. $ gimli -f test.md -w '--toc --footer-right "[page]/[toPage]"'
 
 This gives a pdf with a table of contents and page numbers in the footer.
 
-See the "man page":https://github.com/antialize/wkhtmltopdf/blob/master/README_WKHTMLTOPDF#L80 for wkhtmltopdf for all possible parameters.
+See the "man page":http://wkhtmltopdf.org/usage/wkhtmltopdf.txt for wkhtmltopdf for all possible parameters.
 
 Run @gimli -h@ for a full list of options available
 
