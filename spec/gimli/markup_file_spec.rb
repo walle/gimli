@@ -11,15 +11,15 @@ describe Gimli::MarkupFile do
   end
 
   it 'should recognize valid format' do
-    @file.valid_format?('textile').should be_true
+    @file.valid_format?('textile').should be true
   end
 
   it 'should recognize invalid format' do
-    @file.valid_format?('abc123').should be_false
+    @file.valid_format?('abc123').should be false
   end
 
   it 'should recognize nil as invalid format' do
-    @file.valid_format?(nil).should be_false
+    @file.valid_format?(nil).should be false
   end
 
   it 'should give the name as the filename without the extension' do
