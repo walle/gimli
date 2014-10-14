@@ -17,11 +17,11 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = %w[README.textile LICENSE]
 
-  s.add_dependency 'github-markup', '~> 0.7.4'
-  s.add_dependency 'redcarpet', '~> 2.1.1'
+  s.add_dependency 'github-markup', '~> 1.3'
+  s.add_dependency 'redcarpet', '~> 3.2'
   s.add_dependency 'RedCloth', '~> 4.2.7'
 
-  s.add_dependency 'coderay', '~> 1.0.7'
+  s.add_dependency 'coderay', '~> 1.1'
   s.add_dependency 'nokogiri', '~> 1.6.3'
 
   s.add_dependency 'wkhtmltopdf-binary-11', '~> 0.1.0'
