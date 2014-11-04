@@ -7,5 +7,8 @@ end
 
 RSpec.configure do |config|
   config.mock_with :rr
+  config.expect_with :rspec do |c|
+    c.syntax = :should
+  end
 end
 
