@@ -33,7 +33,7 @@ module Gimli extend OptiFlagSet
     alternate_forms 'm'
   end
   optional_switch_flag 'debug' do
-    description 'Debugs html output to stdout'
+    description 'Debugs wkhtmltopdf command and html output to stdout'
     alternate_forms 'd'
   end
   optional_switch_flag 'removefrontmatter' do

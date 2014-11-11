@@ -64,6 +64,7 @@ module Gimli
       load_stylesheets
       generate_cover!
       append_stylesheets html
+      puts @wkhtmltopdf.command(output_file(filename)).join(' ') if @config.debug
       @wkhtmltopdf.output_pdf html, output_file(filename)
     end
 
