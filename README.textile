@@ -67,21 +67,21 @@ h4. Running the image
 
 bc. $ docker run -v <host_dir>:<container_dir> walle/gimli -f <container_dir>/my-file.md -o <container_dir>
 
-Where <host_dir> is the directory with the files you want to convert and <container_dir> is the directory in the image where the files will be put. This will write the pdf files to the same directory as where your source files is. If you want to make a new directory for the pdfs you can call the image like this:
+Where @<host_dir>@ is the directory with the files you want to convert and @<container_dir>@ is the directory in the image where the files will be put. This will write the pdf files to the same directory as where your source files is. If you want to make a new directory for the pdfs you can call the image like this:
 
 bc. $ docker run -v <host_dir>:<container_dir> walle/gimli -f <container_dir>/my-file.md -o <container_dir>/pdfs
 
-This will put the pdfs in a folder named pdfs in your <host_dir>.
+This will put the pdfs in a folder named pdfs in your @<host_dir>@.
 
 h5. A real example
 
 bc. $ docker run -v /home/walle/gimlidocuments:/tmp/gimli walle/gimli -f /tmp/gimli/my-file.md -o /tmp/gimli
 
-This will generate a pdf from the file in `/home/walle/gimlidocuments/my-file.md` in the `/home/walle/gimlidocuments` directory.
+This will generate a pdf from the file in @/home/walle/gimlidocuments/my-file.md@ in the @/home/walle/gimlidocuments@ directory.
 
 h5. Arguments
 
-All arguments you supply to running the image will end up in gimli, so for an example you could supply the -s flag to use a custom stylesheet. But the stylesheet must be in <host_dir> to be readable by gimli.
+All arguments you supply to running the image will end up in gimli, so for an example you could supply the @-s@ flag to use a custom stylesheet. But the stylesheet must be in @<host_dir>@ to be readable by gimli.
 
 h2. Syntax highlighting
 
