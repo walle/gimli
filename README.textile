@@ -65,23 +65,17 @@ There is a Docker container to use for converting files using gimli without inst
 
 h4. Running the image
 
-```
-docker run -v <host_dir>:<container_dir> walle/gimli -f <container_dir>/my-file.md -o <container_dir>
-```
+bc. $ docker run -v <host_dir>:<container_dir> walle/gimli -f <container_dir>/my-file.md -o <container_dir>
 
 Where <host_dir> is the directory with the files you want to convert and <container_dir> is the directory in the image where the files will be put. This will write the pdf files to the same directory as where your source files is. If you want to make a new directory for the pdfs you can call the image like this:
 
-```
-docker run -v <host_dir>:<container_dir> walle/gimli -f <container_dir>/my-file.md -o <container_dir>/pdfs
-```
+bc. $ docker run -v <host_dir>:<container_dir> walle/gimli -f <container_dir>/my-file.md -o <container_dir>/pdfs
 
 This will put the pdfs in a folder named pdfs in your <host_dir>.
 
 h5. A real example
 
-```
-docker run -v /home/walle/gimlidocuments:/tmp/gimli walle/gimli -f /tmp/gimli/my-file.md -o /tmp/gimli
-```
+bc. $ docker run -v /home/walle/gimlidocuments:/tmp/gimli walle/gimli -f /tmp/gimli/my-file.md -o /tmp/gimli
 
 This will generate a pdf from the file in `/home/walle/gimlidocuments/my-file.md` in the `/home/walle/gimlidocuments` directory.
 
