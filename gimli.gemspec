@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rr'
   s.add_development_dependency 'bundler'
 
-  s.files = Dir.glob("{bin,ext,lib,spec,config}/**/*") + ['LICENSE', 'README.textile']
+  s.files = Dir.glob("{bin,ext,lib,spec,config}/**/*") + ['LICENSE', 'README.md', 'CHANGELOG.md']
   s.executables = ['gimli']
   s.require_paths = ['lib']
 end
