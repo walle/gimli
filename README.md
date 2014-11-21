@@ -33,9 +33,11 @@ The best way to install Gimli is with RubyGems:
 
 You can install from source:
 
-    $ cd gimli/
-    $ bundle
-    $ rake install
+```
+$ cd gimli/
+$ bundle
+$ rake install
+```
 
 ## Running
 
