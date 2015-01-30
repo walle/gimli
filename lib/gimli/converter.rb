@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'fileutils'
+require 'tempfile'
 
 require 'gimli/markup'
 
@@ -8,8 +9,6 @@ module Gimli
 
   # The class that converts the files
   class Converter
-
-    COVER_FILE_PATH = ::File.expand_path("../../../config/cover.html", __FILE__)
 
     # Initialize the converter with a File
     # @param [Array] files The list of Gimli::MarkupFile to convert (passing a single file will still work)
@@ -19,7 +18,10 @@ module Gimli
 
       @stylesheets = []
       parameters = [@config.wkhtmltopdf_parameters]
-      parameters << '--cover' << COVER_FILE_PATH if config.cover
+      if config.cover
+        @coverfile = Tempfile.new(['coverfile', '.html'])
+        parameters << '--cover' << @coverfile.path
+      end
       @wkhtmltopdf = Wkhtmltopdf.new parameters.join(' ')
     end
 
@@ -130,9 +132,8 @@ module Gimli
       html = "<div class=\"cover\">\n#{markup.render}\n</div>"
       append_stylesheets(html)
       html = add_head(html)
-      File.open(COVER_FILE_PATH, 'w') do |f|
-        f.write html
-      end
+      @coverfile.write(html)
+      @coverfile.close
     end
   end
 end

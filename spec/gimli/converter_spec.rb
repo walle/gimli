@@ -131,10 +131,9 @@ describe Gimli::Converter do
       stub(renderer).render { 'fake' }
     end
 
-    FileUtils.rm_f(Gimli::Converter::COVER_FILE_PATH)
     converter.generate_cover!
-    File.exists?(Gimli::Converter::COVER_FILE_PATH).should == true
-    FileUtils.rm_f(Gimli::Converter::COVER_FILE_PATH)
+    coverfile = converter.instance_variable_get(:@coverfile)
+    File.exists?(coverfile.path).should == true
   end
 end
 
