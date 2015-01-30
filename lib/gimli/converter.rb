@@ -9,7 +9,7 @@ module Gimli
   # The class that converts the files
   class Converter
 
-    COVER_FILE_PATH = ::File.expand_path("../../../config/cover.html", __FILE__)
+    COVER_FILE_PATH = ::File.expand_path("cover.html", Dir.pwd)
 
     # Initialize the converter with a File
     # @param [Array] files The list of Gimli::MarkupFile to convert (passing a single file will still work)
