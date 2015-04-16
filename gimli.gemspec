@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = s.name
 
   s.rdoc_options = ["--charset=UTF-8"]
-  s.extra_rdoc_files = %w[README.textile LICENSE]
+  s.extra_rdoc_files = %w[README.md LICENSE]
 
   s.add_dependency 'github-markup', '~> 1.3'
   s.add_dependency 'redcarpet', '~> 3.2'
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rr'
   s.add_development_dependency 'bundler'
 
-  s.files = Dir.glob("{bin,ext,lib,spec,config}/**/*") + ['LICENSE', 'README.textile']
+  s.files = Dir.glob("{bin,ext,lib,spec,config}/**/*") + ['LICENSE', 'README.md', 'CHANGELOG.md']
   s.executables = ['gimli']
   s.require_paths = ['lib']
 end

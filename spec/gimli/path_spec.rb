@@ -26,7 +26,7 @@ describe Gimli::Path do
 
   # What is the sound of one file recursing?
   it 'should find one file, with a specified file, with recursion' do
-    Gimli::Path.list_valid('README.textile', true).length.should == 1
+    Gimli::Path.list_valid('README.md', true).length.should == 1
   end
 
 end
