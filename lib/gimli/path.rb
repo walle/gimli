@@ -23,7 +23,7 @@ module Gimli
       end
 
       # Use select to support ruby 1.8
-      Dir.glob(target).select { |file| MarkupFile.new(file).valid? }
+      Dir.glob(target).sort().select { |file| MarkupFile.new(file).valid? }
     end
   end
 end

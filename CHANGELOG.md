@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.9
+
+* Add sort on files in path to ensure the alphabetical order is maintained.
+
+## 0.5.8
+
+* Use a tempfile for the cover option. Fixes bug where using system ruby on
+  OSX gets write error.
+
 ## 0.5.5
 
 * Add --cover option for creating cover with markdown file https://github.com/walle/gimli/pull/48 Thanks @k0kubun
