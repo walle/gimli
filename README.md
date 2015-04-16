@@ -51,6 +51,10 @@ Standard behavior is for gimli to output the files in the current directory. To 
 
 Gimli also plays nice with Jekyll style markup files. You can pass gimli the `-y` flag to have it remove Jekyll’s YAML front matter from the top of your markup files. Allowing you to use gimli & Jekyll together on your Blog/Resume/Catalogue to create nicely formatted versions for online and offline viewing.
 
+Gimli can add a cover to your document based on another markdown file. To do this use the `-cover` flag. eg.
+
+    $ gimli -f doc-file.md -cover cover-file.md
+
 To pass parameters directly to wkhtmltopdf, use the `-w` flag. eg.
 
     $ gimli -f test.md -w '--toc --footer-right "[page]/[toPage]"'
