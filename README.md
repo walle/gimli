@@ -39,6 +39,17 @@ $ bundle
 $ rake install
 ```
 
+###On Windows
+
+If you want to use gimli on windows you will have to make the following actions.
+
+* Install `wkhtmltopdf` separatly on your OS. Find the package [here](http://wkhtmltopdf.org/downloads.html).
+> Make sure that the path to the `wkhtmltopdf.exe` binary is in your `$PATH` environement variable
+
+* Install the `which` command of the GnuWin32 on your OS. Find the package [here](http://gnuwin32.sourceforge.net/packages/which.htm).
+This command allow gimli to locate the correct binary or `wkhtmltopdf` on your hard drive to perform the html->PDF conversion.
+> Make sure that the path to `which.exe` the binary is in your `$PATH` environement variable
+
 ## Running
 
 The standard way to run gimli is to go to a folder with markup files and running
