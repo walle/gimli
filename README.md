@@ -39,7 +39,7 @@ $ bundle
 $ rake install
 ```
 
-###On Windows
+### On Windows
 
 If you want to use gimli on windows you will have to make the following actions.
 
