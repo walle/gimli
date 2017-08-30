@@ -1,15 +1,19 @@
-FROM nepalez/ruby:latest
+FROM ruby:2.4-slim
 
 MAINTAINER Fredrik Wallgren <fredrik.wallgren@gmail.com>
 
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y libfontconfig1 libxtst6 build-essential xorg libssl-dev libxrender-dev
+ENV DEBIAN_FRONTEND noninteractive
+RUN buildDependencies=' \
+      build-essential \
+    ' \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends --no-install-suggests ${buildDependencies} \
+ && gem install gimli \
+ && apt-get purge -y --auto-remove ${buildDependencies} \
+ && rm -rf /var/lib/apt/lists/*
 
-# Install gimli
-RUN gem install gimli
+# Make this image a wrapper for the CLI
+ENTRYPOINT ["gimli"]
 
-ENTRYPOINT ["/usr/local/bin/gimli"]
-
-# Show the extended help
+# Show the extended help by default
 CMD ["-h"]
