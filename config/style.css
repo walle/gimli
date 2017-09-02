@@ -153,6 +153,9 @@ table {
   width: 100%;
   overflow: auto;
   display: block;
+  clear: both;
+  border-collapse: collapse;
+  table-layout: auto;
 }
 
 table th {
@@ -165,6 +168,7 @@ table th, table td {
 }
 
 table tr {
+  page-break-inside: avoid;
   border-top: 1px solid #ccc;
   background-color: #fff;
 }
