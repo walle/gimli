@@ -130,8 +130,8 @@ module Gimli
       cover_file = MarkupFile.new @config.cover
       markup = Markup::Renderer.new cover_file
       html = "<div class=\"cover\">\n#{markup.render}\n</div>"
-      append_stylesheets(html)
       html = add_head(html)
+      append_stylesheets(html)
       @coverfile.write(html)
       @coverfile.close
     end
