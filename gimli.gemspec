@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rr'
+  s.add_development_dependency 'rr', '~> 1.1.2'
   s.add_development_dependency 'bundler'
 
   s.files = Dir.glob("{bin,ext,lib,spec,config}/**/*") + ['LICENSE', 'README.md', 'CHANGELOG.md']
