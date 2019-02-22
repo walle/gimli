@@ -7,7 +7,7 @@ RUN buildDependencies=' \
       build-essential \
     ' \
  && apt-get update \
- && apt-get install -y --no-install-recommends --no-install-suggests ${buildDependencies} \
+ && apt-get install -y --no-install-recommends --no-install-suggests ${buildDependencies} libfontconfig libxext6 \
  && gem install gimli \
  && apt-get purge -y --auto-remove ${buildDependencies} \
  && rm -rf /var/lib/apt/lists/*
