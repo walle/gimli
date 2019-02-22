@@ -136,3 +136,4 @@ describe Gimli::Converter do
     File.exists?(coverfile.path).should == true
   end
 end
+

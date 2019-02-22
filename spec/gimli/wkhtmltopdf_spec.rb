@@ -32,3 +32,4 @@ describe Gimli::Wkhtmltopdf do
     @wkhtmltopdf.output_pdf('', '')
   end
 end
+
