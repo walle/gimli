@@ -8,10 +8,10 @@ describe Gimli::Converter do
   it 'should give the correct output_file with none given' do
     file = Gimli::MarkupFile.new 'fake'
     name = 'my_file'
-    double(file).name { name }
+    mock(file).name { name }
 
     converter = Gimli::Converter.new [file], Gimli::Config.new
-    double(converter).output_dir { Dir.getwd }
+    mock(converter).output_dir { Dir.getwd }
 
     converter.output_file.should == File.join(Dir.getwd, "#{name}.pdf")
   end
@@ -19,10 +19,10 @@ describe Gimli::Converter do
   it 'should give the correct output_file with one given' do
     file = Gimli::MarkupFile.new 'fake'
     name = 'my_file'
-    double(file).name { name }
+    mock(file).name { name }
 
     converter = Gimli::Converter.new [file], Gimli::Config.new
-    double(converter).output_dir { '/tmp/out' }
+    mock(converter).output_dir { '/tmp/out' }
 
     converter.output_file(file).should == "/tmp/out/#{name}.pdf"
   end
@@ -36,7 +36,7 @@ describe Gimli::Converter do
     end
 
     converter = Gimli::Converter.new [file], config
-    double(converter).output_dir { Dir.getwd }
+    mock(converter).output_dir { Dir.getwd }
 
     converter.output_file(file).should == File.join(Dir.getwd, "#{output_filename}.pdf")
   end
@@ -61,7 +61,7 @@ describe Gimli::Converter do
 
     converter = Gimli::Converter.new file, config
 
-    double(File).directory?(dir) { true }
+    mock(File).directory?(dir) { true }
 
     converter.output_dir.should == dir
   end
