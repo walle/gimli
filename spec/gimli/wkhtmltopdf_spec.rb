@@ -11,7 +11,7 @@ describe Gimli::Wkhtmltopdf do
   end
 
   it 'should assemble correct command' do
-    mock(@wkhtmltopdf).bin { '"wkhtmltopdf"' }
+    double(@wkhtmltopdf).bin { '"wkhtmltopdf"' }
     args = @wkhtmltopdf.command('test.pdf')
     args.size.should eq 4
     args.should include '"wkhtmltopdf"'
@@ -21,14 +21,14 @@ describe Gimli::Wkhtmltopdf do
   end
 
   it 'should use which to find wkhtmltopdf first time' do
-    mock(@wkhtmltopdf).__double_definition_create__.call(:`, "which wkhtmltopdf") { '~/wkhtmltopdf' }
+    double(@wkhtmltopdf).__double_definition_create__.call(:`, "which wkhtmltopdf") { '~/wkhtmltopdf' }
     @wkhtmltopdf.bin.should eq '"~/wkhtmltopdf"'
     @wkhtmltopdf.bin.should eq '"~/wkhtmltopdf"' # Should be cached
   end
 
   it 'should generate a pdf' do
-    mock(@wkhtmltopdf).__double_definition_create__.call(:`, "which wkhtmltopdf") { '~/wkhtmltopdf' }
-    mock(IO).popen("\"~/wkhtmltopdf\" -q - \"\"", "wb+") { true }
+    double(@wkhtmltopdf).__double_definition_create__.call(:`, "which wkhtmltopdf") { '~/wkhtmltopdf' }
+    double(IO).popen("\"~/wkhtmltopdf\" -q - \"\"", "wb+") { true }
     @wkhtmltopdf.output_pdf('', '')
   end
 end

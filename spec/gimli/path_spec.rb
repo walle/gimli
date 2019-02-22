@@ -7,12 +7,12 @@ require './lib/gimli'
 describe Gimli::Path do
 
   it 'should find all files in the current directory, with no specified target, without recursion' do
-    mock(Dir).pwd { './spec/fixtures/recursion/' }
+    double(Dir).pwd { './spec/fixtures/recursion/' }
     Gimli::Path.list_valid(nil, false).length.should == 1
   end
 
   it 'should find all files in all subdirectories, with no specified target, with recursion ' do
-    mock(Dir).pwd { './spec/fixtures/recursion/' }
+    double(Dir).pwd { './spec/fixtures/recursion/' }
     Gimli::Path.list_valid(nil, true).length.should == 2
   end
 
